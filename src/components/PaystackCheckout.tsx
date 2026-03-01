@@ -67,38 +67,45 @@ export default function PaystackCheckout({ productName, productPrice, productId 
       onClose: function() {
         setIsProcessing(false);
       },
-      callback: async function(response: any) {
+      // FIX: Changed from 'async function' to standard 'function'
+      callback: function(response: any) {
         setIsProcessing(false);
         setIsVerifying(true);
 
-        try {
-          const verifyResponse = await fetch('/.netlify/functions/verify-payment', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              reference: response.reference,
-              email: 'customer@example.com'
-            })
-          });
+        // FIX: Wrapped your async verification logic safely inside
+        const verifyPayment = async () => {
+          try {
+            const verifyResponse = await fetch('/.netlify/functions/verify-payment', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                reference: response.reference,
+                email: 'customer@example.com'
+              })
+            });
 
-          const result = await verifyResponse.json();
+            const result = await verifyResponse.json();
 
-          if (verifyResponse.ok && result.success) {
-            setShowSuccess(true);
-            setTimeout(() => setShowSuccess(false), 5000);
-          } else {
-            setErrorMessage(result.error || 'Payment verification failed. Please contact support.');
+            if (verifyResponse.ok && result.success) {
+              setShowSuccess(true);
+              setTimeout(() => setShowSuccess(false), 5000);
+            } else {
+              setErrorMessage(result.error || 'Payment verification failed. Please contact support.');
+              setShowError(true);
+            }
+          } catch (error) {
+            console.error('Verification error:', error);
+            setErrorMessage('Unable to verify payment. Please contact support with your reference: ' + response.reference);
             setShowError(true);
+          } finally {
+            setIsVerifying(false);
           }
-        } catch (error) {
-          console.error('Verification error:', error);
-          setErrorMessage('Unable to verify payment. Please contact support with your reference: ' + response.reference);
-          setShowError(true);
-        } finally {
-          setIsVerifying(false);
-        }
+        };
+
+        // FIX: Execute the async logic
+        verifyPayment();
       }
     });
 
