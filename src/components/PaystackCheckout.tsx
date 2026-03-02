@@ -29,6 +29,7 @@ export default function PaystackCheckout({ productName, productPrice, productId 
   const [fullName, setFullName] = useState('');
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
 
   const [state, handleFormspreeSubmit] = useForm('mlgwkkpn');
 
@@ -49,7 +50,7 @@ export default function PaystackCheckout({ productName, productPrice, productId 
 
     const handler = (window as any).PaystackPop.setup({
       key: publicKey,
-      email: 'customer@example.com',
+      email: email, // Change 'customer@example.com' to email,
       amount: priceInKobo,
       currency: 'NGN',
       ref: `${productId}_${Date.now()}`,
@@ -66,7 +67,7 @@ export default function PaystackCheckout({ productName, productPrice, productId 
     try {
       const res = await fetch('/.netlify/functions/verify-payment', {
         method: 'POST',
-        body: JSON.stringify({ reference, email: 'customer@example.com' })
+        body: JSON.stringify({ reference, email })
       });
       const result = await res.json();
       if (res.ok && result.success) {
@@ -104,6 +105,7 @@ export default function PaystackCheckout({ productName, productPrice, productId 
             <input type="text" name="fullName" placeholder="Full Name" required value={fullName} onChange={e => setFullName(e.target.value)} className="w-full p-3 border rounded-lg" />
             <input type="text" name="address" placeholder="Address" required value={address} onChange={e => setAddress(e.target.value)} className="w-full p-3 border rounded-lg" />
             <input type="tel" name="phone" placeholder="Phone" required value={phone} onChange={e => setPhone(e.target.value)} className="w-full p-3 border rounded-lg" />
+            <input type="email" placeholder="Email Address" required value={email} onChange={e => setEmail(e.target.value)} className="w-full p-3 border rounded-lg" />
             <button type="submit" disabled={state.submitting} className="w-full bg-red-600 text-white py-3 rounded-lg font-semibold">
               {state.submitting ? 'Processing...' : 'Continue to Payment'}
             </button>
