@@ -3,6 +3,7 @@ import Navigation from './components/Navigation';
 import HomePage from './pages/HomePage';
 import NewProductsPage from './pages/NewProductsPage';
 import ContactPage from './pages/ContactPage';
+import MyOrdersPage from './pages/MyOrdersPage';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -39,6 +40,8 @@ function App() {
         );
       case 'contact':
         return <ContactPage />;
+      case 'orders':
+        return <MyOrdersPage />;
       default:
         return <HomePage onNavigate={handleNavigate} />;
     }
