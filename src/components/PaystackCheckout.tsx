@@ -28,6 +28,7 @@ export default function PaystackCheckout({ productName, productPrice, productId 
   const [errorMessage, setErrorMessage] = useState('');
   
   // NEW: State for Delivery Info
+  const [fullName, setFullName] = useState('');
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
 
@@ -36,8 +37,8 @@ export default function PaystackCheckout({ productName, productPrice, productId 
 
   const handlePayment = () => {
     // NEW: Validation before opening Paystack
-    if (!address || !phone) {
-      setErrorMessage('Please enter your delivery address and phone number before buying.');
+    if (!fullName || !address || !phone) {
+      setErrorMessage('Please enter your full name, delivery address, and phone number.');
       setShowError(true);
       return;
     }
@@ -72,13 +73,11 @@ export default function PaystackCheckout({ productName, productPrice, productId 
           try {
             const verifyResponse = await fetch('/.netlify/functions/verify-payment', {
               method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              // NEW: Sending the address and phone to the backend
+              headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 reference: response.reference,
                 email: 'customer@example.com',
+                full_name: fullName, // Add this
                 address: address,
                 phone: phone
               })
@@ -121,18 +120,19 @@ export default function PaystackCheckout({ productName, productPrice, productId 
     <div className="flex flex-col gap-2">
       {/* NEW: Input fields for user data */}
       <input 
-        type="text" 
-        placeholder="Delivery Address"
-        value={address}
-        onChange={(e) => setAddress(e.target.value)}
-        className="w-full border p-2 rounded text-xs focus:ring-2 focus:ring-red-500 outline-none"
+        type="text" placeholder="Full Name" 
+        value={fullName} onChange={(e) => setFullName(e.target.value)}
+        className="border p-2 rounded text-xs"
       />
       <input 
-        type="tel" 
-        placeholder="Phone Number"
-        value={phone}
-        onChange={(e) => setPhone(e.target.value)}
-        className="w-full border p-2 rounded text-xs focus:ring-2 focus:ring-red-500 outline-none"
+        type="text" placeholder="Delivery Address" 
+        value={address} onChange={(e) => setAddress(e.target.value)}
+        className="border p-2 rounded text-xs"
+      />
+      <input 
+        type="tel" placeholder="Phone Number" 
+        value={phone} onChange={(e) => setPhone(e.target.value)}
+        className="border p-2 rounded text-xs"
       />
 
       <button

@@ -10,13 +10,13 @@ exports.handler = async (event, context) => {
 
   try {
     // 1. Destructure the new address and phone fields from the frontend
-    const { reference, email, address, phone } = JSON.parse(event.body);
+    const { reference, email, full_name, address, phone } = JSON.parse(event.body);
 
     // 2. Updated Validation
-    if (!reference || !email || !address || !phone) {
+    if (!reference || !email || !full_name || !address || !phone) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ error: 'Missing required details: reference, email, address, or phone' }),
+        body: JSON.stringify({ error: 'Missing required details (reference, email, full name, address, or phone)' }),
       };
     }
 
@@ -45,9 +45,9 @@ exports.handler = async (event, context) => {
 
     // 3. Insert including the new columns
     await sql`
-      INSERT INTO transactions (reference, email, amount, status, delivery_address, phone_number)
-      VALUES (${reference}, ${email}, ${amount}, ${status}, ${address}, ${phone})
-    `;
+  INSERT INTO transactions (reference, email, amount, status, full_name, delivery_address, phone_number)
+  VALUES (${reference}, ${email}, ${amount}, ${status}, ${full_name}, ${address}, ${phone})
+`;
 
     return {
       statusCode: 200,
