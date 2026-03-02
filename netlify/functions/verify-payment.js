@@ -1,7 +1,6 @@
 const { neon } = require('@neondatabase/serverless');
 
 exports.handler = async (event, context) => {
-  // 1. Only allow POST requests
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
@@ -10,26 +9,20 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const { reference, email } = JSON.parse(event.body);
+    // 1. Destructure the new address and phone fields from the frontend
+    const { reference, email, address, phone } = JSON.parse(event.body);
 
-    if (!reference || !email) {
+    // 2. Updated Validation
+    if (!reference || !email || !address || !phone) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ error: 'Missing reference or email' }),
+        body: JSON.stringify({ error: 'Missing required details: reference, email, address, or phone' }),
       };
     }
 
     const paystackSecretKey = process.env.PAYSTACK_SECRET_KEY;
-    if (!paystackSecretKey) {
-      console.error('PAYSTACK_SECRET_KEY is missing in Netlify environment variables');
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ error: 'Server configuration error' }),
-      };
-    }
-
-    // 2. Verify with Paystack
     const verifyUrl = `https://api.paystack.co/transaction/verify/${reference}`;
+    
     const verifyResponse = await fetch(verifyUrl, {
       method: 'GET',
       headers: {
@@ -43,39 +36,24 @@ exports.handler = async (event, context) => {
     if (!verifyResponse.ok || paystackData.data.status !== 'success') {
       return {
         statusCode: 400,
-        body: JSON.stringify({ 
-          error: 'Payment was not successful', 
-          status: paystackData.data?.status 
-        }),
+        body: JSON.stringify({ error: 'Payment was not successful' }),
       };
     }
 
     const { amount, status } = paystackData.data;
-
-    // 3. Connect to Neon Database
     const sql = neon(process.env.DATABASE_URL);
 
-    // Check if reference already exists to prevent duplicate entries
-    const existing = await sql`SELECT id FROM transactions WHERE reference = ${reference}`;
-    
-    if (existing.length > 0) {
-      return {
-        statusCode: 200,
-        body: JSON.stringify({ success: true, message: 'Already recorded' }),
-      };
-    }
-
-    // 4. Insert into database
+    // 3. Insert including the new columns
     await sql`
-      INSERT INTO transactions (reference, email, amount, status)
-      VALUES (${reference}, ${email}, ${amount}, ${status})
+      INSERT INTO transactions (reference, email, amount, status, delivery_address, phone_number)
+      VALUES (${reference}, ${email}, ${amount}, ${status}, ${address}, ${phone})
     `;
 
     return {
       statusCode: 200,
       body: JSON.stringify({
         success: true,
-        message: 'Payment verified and recorded successfully'
+        message: 'Payment verified and delivery info recorded successfully'
       }),
     };
 
