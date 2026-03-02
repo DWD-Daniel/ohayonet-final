@@ -2,22 +2,15 @@ const { neon } = require('@neondatabase/serverless');
 
 exports.handler = async (event, context) => {
   if (event.httpMethod !== 'POST') {
-    return {
-      statusCode: 405,
-      body: JSON.stringify({ error: 'Method not allowed' }),
-    };
+    return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
   try {
-    // 1. Destructure the new address and phone fields from the frontend
-    const { reference, email, full_name, address, phone } = JSON.parse(event.body);
+    // Only parse the financial fields
+    const { reference, email } = JSON.parse(event.body);
 
-    // 2. Updated Validation
-    if (!reference || !email || !full_name || !address || !phone) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ error: 'Missing required details (reference, email, full name, address, or phone)' }),
-      };
+    if (!reference || !email) {
+      return { statusCode: 400, body: JSON.stringify({ error: 'Missing reference or email' }) };
     }
 
     const paystackSecretKey = process.env.PAYSTACK_SECRET_KEY;
@@ -25,43 +18,27 @@ exports.handler = async (event, context) => {
     
     const verifyResponse = await fetch(verifyUrl, {
       method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${paystackSecretKey}`,
-        'Content-Type': 'application/json'
-      }
+      headers: { 'Authorization': `Bearer ${paystackSecretKey}`, 'Content-Type': 'application/json' }
     });
 
     const paystackData = await verifyResponse.json();
 
     if (!verifyResponse.ok || paystackData.data.status !== 'success') {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ error: 'Payment was not successful' }),
-      };
+      return { statusCode: 400, body: JSON.stringify({ error: 'Payment failed' }) };
     }
 
     const { amount, status } = paystackData.data;
     const sql = neon(process.env.DATABASE_URL);
 
-    // 3. Insert including the new columns
+    // This INSERT matches your exact existing database schema
     await sql`
-  INSERT INTO transactions (reference, email, amount, status, full_name, delivery_address, phone_number)
-  VALUES (${reference}, ${email}, ${amount}, ${status}, ${full_name}, ${address}, ${phone})
-`;
+      INSERT INTO transactions (reference, email, amount, status)
+      VALUES (${reference}, ${email}, ${amount}, ${status})
+    `;
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify({
-        success: true,
-        message: 'Payment verified and delivery info recorded successfully'
-      }),
-    };
+    return { statusCode: 200, body: JSON.stringify({ success: true, message: 'Recorded' }) };
 
   } catch (error) {
-    console.error('Error:', error);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: 'Internal server error', details: error.message }),
-    };
+    return { statusCode: 500, body: JSON.stringify({ error: 'Internal server error' }) };
   }
 };
