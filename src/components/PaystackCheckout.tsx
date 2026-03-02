@@ -1,27 +1,24 @@
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { ShoppingCart, CheckCircle, XCircle, Loader2, X } from 'lucide-react';
 import { useForm } from '@formspree/react';
 
-interface PaystackCheckoutProps {
-  productName: string;
-  productPrice: string;
-  productId: string;
-}
+// --- STABLE MODAL COMPONENTS (Defined OUTSIDE the main function) ---
+// By moving them out, they are NOT re-declared on every keystroke, fixing the focus issue.
 
-interface PaystackPopup {
-  setup: (config: any) => void;
-  openIframe: () => void;
-}
+const ModalWrapper = ({ children, onClose }: { children: React.ReactNode, onClose: () => void }) => 
+  createPortal(
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[9999] p-4" onClick={onClose}>
+      <div onClick={e => e.stopPropagation()} className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl">
+        {children}
+      </div>
+    </div>,
+    document.body
+  );
 
-declare global {
-  interface Window {
-    PaystackPop?: {
-      setup: (config: any) => PaystackPopup;
-    };
-  }
-}
+// --- MAIN COMPONENT ---
 
-export default function PaystackCheckout({ productName, productPrice, productId }: PaystackCheckoutProps) {
+export default function PaystackCheckout({ productName, productPrice, productId }: any) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -38,265 +35,111 @@ export default function PaystackCheckout({ productName, productPrice, productId 
   const priceInNaira = parseFloat(productPrice.replace('$', ''));
   const priceInKobo = Math.round(priceInNaira * 100);
 
+  // Trigger Paystack only when Formspree succeeds
   useEffect(() => {
     if (state.succeeded && showModal) {
       setShowModal(false);
-      setFullName('');
-      setAddress('');
-      setPhone('');
       openPaystackGateway();
     }
-  }, [state.succeeded, showModal]);
-
-  const handleBuyClick = () => {
-    setShowModal(true);
-  };
-
-  const handleModalSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!fullName.trim() || !address.trim() || !phone.trim()) {
-      setErrorMessage('Please fill in all fields.');
-      setShowError(true);
-      return;
-    }
-
-    await handleFormspreeSubmit(e);
-  };
+  }, [state.succeeded]);
 
   const openPaystackGateway = () => {
     const publicKey = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
+    if (!window.PaystackPop) return;
 
-    if (!publicKey) {
-      setErrorMessage('Payment system is not configured. Please contact support.');
-      setShowError(true);
-      return;
-    }
-
-    if (!window.PaystackPop) {
-      setErrorMessage('Payment system is loading. Please try again in a moment.');
-      setShowError(true);
-      return;
-    }
-
-    setIsProcessing(true);
-
-    const handler = window.PaystackPop.setup({
+    const handler = (window as any).PaystackPop.setup({
       key: publicKey,
       email: 'customer@example.com',
       amount: priceInKobo,
       currency: 'NGN',
-      ref: `${productId}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-      callback: function(response: any) {
-        setIsProcessing(false);
+      ref: `${productId}_${Date.now()}`,
+      callback: (response: any) => {
         setIsVerifying(true);
-
-        const verifyPayment = async () => {
-          try {
-            const verifyResponse = await fetch('/.netlify/functions/verify-payment', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                reference: response.reference,
-                email: 'customer@example.com'
-              })
-            });
-
-            const result = await verifyResponse.json();
-
-            if (verifyResponse.ok && result.success) {
-              setShowSuccess(true);
-              setTimeout(() => setShowSuccess(false), 5000);
-            } else {
-              setErrorMessage(result.error || 'Payment verification failed. Please contact support.');
-              setShowError(true);
-            }
-          } catch (error) {
-            console.error('Verification error:', error);
-            setErrorMessage('Unable to verify payment. Please contact support.');
-            setShowError(true);
-          } finally {
-            setIsVerifying(false);
-          }
-        };
-
-        verifyPayment();
+        verifyOnServer(response.reference);
       },
-      onClose: function() {
-        setIsProcessing(false);
-      }
+      onClose: () => setIsProcessing(false)
     });
-
     handler.openIframe();
   };
 
-  if (showSuccess) {
-    return (
-      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-xl">
-          <div className="flex flex-col items-center text-center">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-              <CheckCircle className="w-10 h-10 text-green-600" />
-            </div>
-            <h3 className="text-2xl font-bold text-black mb-2">Payment Successful!</h3>
-            <p className="text-gray-600 mb-6">
-              Your order has been confirmed. Thank you for your purchase!
-            </p>
-            <button
-              onClick={() => setShowSuccess(false)}
-              className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
-            >
-              Continue Shopping
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (showError) {
-    return (
-      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-xl">
-          <div className="flex flex-col items-center text-center">
-            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
-              <XCircle className="w-10 h-10 text-red-600" />
-            </div>
-            <h3 className="text-2xl font-bold text-black mb-2">Payment Failed</h3>
-            <p className="text-gray-600 mb-6">{errorMessage}</p>
-            <button
-              onClick={() => setShowError(false)}
-              className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
-            >
-              Try Again
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (isVerifying) {
-    return (
-      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-xl">
-          <div className="flex flex-col items-center text-center">
-            <Loader2 className="w-16 h-16 text-red-600 animate-spin mb-4" />
-            <h3 className="text-2xl font-bold text-black mb-2">Verifying Payment</h3>
-            <p className="text-gray-600">Please wait while we confirm your transaction...</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const verifyOnServer = async (reference: string) => {
+    try {
+      const res = await fetch('/.netlify/functions/verify-payment', {
+        method: 'POST',
+        body: JSON.stringify({ reference, email: 'customer@example.com' })
+      });
+      const result = await res.json();
+      if (res.ok && result.success) {
+        setShowSuccess(true);
+      } else {
+        setErrorMessage(result.error || 'Verification failed');
+        setShowError(true);
+      }
+    } catch (err: any) {
+      setErrorMessage(err.message || 'Server error');
+      setShowError(true);
+    } finally {
+      setIsVerifying(false);
+    }
+  };
 
   return (
     <>
-      <button
-        onClick={handleBuyClick}
-        disabled={isProcessing}
-        className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg text-xs font-semibold transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-1 w-full"
+      <button 
+        onClick={() => setShowModal(true)} 
+        disabled={isProcessing || isVerifying}
+        className="bg-red-600 text-white px-3 py-2 rounded-lg text-xs font-semibold w-full hover:bg-red-700 transition-all"
       >
-        {isProcessing ? (
-          <>
-            <Loader2 className="w-3 h-3 animate-spin" />
-            <span>Processing...</span>
-          </>
-        ) : (
-          <>
-            <ShoppingCart className="w-3 h-3" />
-            <span>Buy</span>
-          </>
-        )}
+        Buy
       </button>
 
+      {/* Delivery Details Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-xl">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-bold text-black">Delivery Details</h3>
-              <button
-                onClick={() => setShowModal(false)}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </div>
-
-            <form onSubmit={handleModalSubmit} className="space-y-4">
-              <div>
-                <label htmlFor="fullName" className="block text-sm font-semibold text-black mb-2">
-                  Full Name *
-                </label>
-                <input
-                  type="text"
-                  id="fullName"
-                  name="fullName"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
-                  placeholder="Enter your full name"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="address" className="block text-sm font-semibold text-black mb-2">
-                  Delivery Address *
-                </label>
-                <textarea
-                  id="address"
-                  name="address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  required
-                  rows={3}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent resize-none"
-                  placeholder="Enter your delivery address"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="phone" className="block text-sm font-semibold text-black mb-2">
-                  Phone Number *
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
-                  placeholder="Enter your phone number"
-                />
-              </div>
-
-              <input type="hidden" name="productName" value={productName} />
-              <input type="hidden" name="productPrice" value={productPrice} />
-              <input type="hidden" name="productId" value={productId} />
-
-              <div className="pt-4">
-                <button
-                  type="submit"
-                  disabled={state.submitting}
-                  className="w-full bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-all hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                >
-                  {state.submitting ? (
-                    <>
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                      <span>Submitting...</span>
-                    </>
-                  ) : (
-                    'Continue to Payment'
-                  )}
-                </button>
-              </div>
-            </form>
+        <ModalWrapper onClose={() => setShowModal(false)}>
+          <div className="flex justify-between items-center mb-6">
+            <h3 className="text-2xl font-bold">Delivery Details</h3>
+            <button onClick={() => setShowModal(false)}><X className="w-6 h-6 text-gray-400" /></button>
           </div>
-        </div>
+          <form onSubmit={handleFormspreeSubmit} className="space-y-4">
+            <input type="text" name="fullName" placeholder="Full Name" required value={fullName} onChange={e => setFullName(e.target.value)} className="w-full p-3 border rounded-lg" />
+            <input type="text" name="address" placeholder="Address" required value={address} onChange={e => setAddress(e.target.value)} className="w-full p-3 border rounded-lg" />
+            <input type="tel" name="phone" placeholder="Phone" required value={phone} onChange={e => setPhone(e.target.value)} className="w-full p-3 border rounded-lg" />
+            <button type="submit" disabled={state.submitting} className="w-full bg-red-600 text-white py-3 rounded-lg font-semibold">
+              {state.submitting ? 'Processing...' : 'Continue to Payment'}
+            </button>
+          </form>
+        </ModalWrapper>
+      )}
+
+      {/* Verification / Status Modals */}
+      {isVerifying && (
+        <ModalWrapper onClose={() => {}}>
+           <div className="flex flex-col items-center">
+             <Loader2 className="w-12 h-12 text-red-600 animate-spin mb-4" />
+             <p className="font-bold">Verifying Payment...</p>
+           </div>
+        </ModalWrapper>
+      )}
+
+      {showSuccess && (
+        <ModalWrapper onClose={() => setShowSuccess(false)}>
+          <div className="flex flex-col items-center">
+            <CheckCircle className="w-16 h-16 text-green-600 mb-4" />
+            <h3 className="text-2xl font-bold mb-2">Success!</h3>
+            <button onClick={() => setShowSuccess(false)} className="w-full bg-green-600 text-white py-3 rounded-lg mt-4">Done</button>
+          </div>
+        </ModalWrapper>
+      )}
+
+      {showError && (
+        <ModalWrapper onClose={() => setShowError(false)}>
+          <div className="flex flex-col items-center">
+            <XCircle className="w-16 h-16 text-red-600 mb-4" />
+            <h3 className="text-2xl font-bold mb-2">Error</h3>
+            <p className="text-center mb-4">{errorMessage}</p>
+            <button onClick={() => setShowError(false)} className="w-full bg-red-600 text-white py-3 rounded-lg">Try Again</button>
+          </div>
+        </ModalWrapper>
       )}
     </>
   );
