@@ -16,18 +16,14 @@ const HERO_IMAGES = [
 
 export default function HomePage({ onNavigate }: HomePageProps) {
   const [heroImageIndex, setHeroImageIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const [activeTab, setActiveTab] = useState<'drug' | 'non-drug' | 'medical-device'>('drug');
   const [searchQuery, setSearchQuery] = useState('');
 
+  // PARAMETER 1 & 5: Simplified useEffect without isTransitioning or setTimeouts
   useEffect(() => {
     const interval = setInterval(() => {
-      setIsTransitioning(true);
-      setTimeout(() => {
-        setHeroImageIndex((prev) => (prev + 1) % HERO_IMAGES.length);
-        setIsTransitioning(false);
-      }, 400);
-    }, 4000);
+      setHeroImageIndex((prev) => (prev + 1) % HERO_IMAGES.length);
+    }, 5000); // Transitions every 5 seconds
     return () => clearInterval(interval);
   }, []);
 
@@ -75,34 +71,31 @@ export default function HomePage({ onNavigate }: HomePageProps) {
 
   return (
     <div className="pt-16 min-h-screen bg-white">
-      <section
-        className="relative h-72 md:h-96 flex items-center justify-center overflow-hidden"
-      >
-        {/* Current image background */}
-        <div
-          className="absolute inset-0 transition-opacity duration-500"
-          style={{
-            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${HERO_IMAGES[heroImageIndex]})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            opacity: isTransitioning ? 0 : 1,
-          }}
-        />
+      <section className="relative h-72 md:h-96 flex items-center justify-center overflow-hidden">
+        
+        {/* PARAMETER 3: Mapping all images as permanent layers to eliminate flickers */}
+        {HERO_IMAGES.map((image, index) => (
+          <div
+            key={image}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+              index === heroImageIndex ? 'opacity-100' : 'opacity-0'
+            }`}
+            style={{
+              backgroundImage: `url(${image})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          />
+        ))}
 
-        {/* Next image overlay for smooth transition */}
-        <div
-          className="absolute inset-0 transition-opacity duration-500"
-          style={{
-            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${HERO_IMAGES[(heroImageIndex + 1) % HERO_IMAGES.length]})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            opacity: isTransitioning ? 1 : 0,
-          }}
-        />
+        {/* PARAMETER 4: Dedicated dark overlay for consistent text readability */}
+        <div className="absolute inset-0 bg-black/50 z-1" />
 
         {/* Content */}
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-          <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 mt-6 md:mt-0">Advanced Healthcare Solutions</h1>
+          <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 mt-6 md:mt-0">
+            Advanced Healthcare Solutions
+          </h1>
           <p className="text-base md:text-xl text-gray-100 mb-4 md:mb-8">
             Your trusted source for quality pharmaceuticals and health products
           </p>
@@ -121,6 +114,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
+      {/* ... Rest of your component (Tabs, New Arrivals, Discounts, Footer) stays exactly as it was ... */}
       <section className="py-12 bg-stone-50 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex gap-4 mb-8 justify-center">
@@ -138,7 +132,6 @@ export default function HomePage({ onNavigate }: HomePageProps) {
               </button>
             ))}
           </div>
-
           {activeCategory && (
             <Carousel items={activeCategory.subcategories} onCardClick={handleSubcategoryClick} />
           )}
