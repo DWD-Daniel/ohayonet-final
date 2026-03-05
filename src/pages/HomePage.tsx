@@ -17,6 +17,7 @@ const HERO_IMAGES = [
 export default function HomePage({ onNavigate }: HomePageProps) {
   const [heroImageIndex, setHeroImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState<'drug' | 'non-drug' | 'medical-device'>('drug');
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -28,6 +29,10 @@ export default function HomePage({ onNavigate }: HomePageProps) {
   const activeCategory = PRODUCT_CATEGORIES.find((cat) => cat.type === activeTab);
   const newArrivals = useMemo(() => getNewArrivals(), []);
   const discountedProducts = useMemo(() => getDiscountedProducts(), []);
+
+  const handleSubcategoryClick = () => {
+    onNavigate('products', activeTab);
+  };
 
   const ProductCard = memo(({ product }: { product: Product }) => (
     <div className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-1 group">
