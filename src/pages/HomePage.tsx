@@ -16,12 +16,17 @@ const HERO_IMAGES = [
 
 export default function HomePage({ onNavigate }: HomePageProps) {
   const [heroImageIndex, setHeroImageIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const [activeTab, setActiveTab] = useState<'drug' | 'non-drug' | 'medical-device'>('drug');
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setHeroImageIndex((prev) => (prev + 1) % HERO_IMAGES.length);
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setHeroImageIndex((prev) => (prev + 1) % HERO_IMAGES.length);
+        setIsTransitioning(false);
+      }, 400);
     }, 4000);
     return () => clearInterval(interval);
   }, []);
@@ -72,14 +77,31 @@ export default function HomePage({ onNavigate }: HomePageProps) {
     <div className="pt-16 min-h-screen bg-white">
       <section
         className="relative h-72 md:h-96 flex items-center justify-center overflow-hidden"
-        style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${HERO_IMAGES[heroImageIndex]})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          transition: 'background-image 0.8s ease-in-out',
-        }}
       >
-        <div className="max-w-4xl mx-auto px-6 text-center">
+        {/* Current image background */}
+        <div
+          className="absolute inset-0 transition-opacity duration-500"
+          style={{
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${HERO_IMAGES[heroImageIndex]})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            opacity: isTransitioning ? 0 : 1,
+          }}
+        />
+
+        {/* Next image overlay for smooth transition */}
+        <div
+          className="absolute inset-0 transition-opacity duration-500"
+          style={{
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${HERO_IMAGES[(heroImageIndex + 1) % HERO_IMAGES.length]})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            opacity: isTransitioning ? 1 : 0,
+          }}
+        />
+
+        {/* Content */}
+        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 mt-6 md:mt-0">Advanced Healthcare Solutions</h1>
           <p className="text-base md:text-xl text-gray-100 mb-4 md:mb-8">
             Your trusted source for quality pharmaceuticals and health products
