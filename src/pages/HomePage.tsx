@@ -1,12 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo, useMemo } from 'react';
 import { ArrowRight } from 'lucide-react';
 import Carousel from '../components/Carousel';
 import SearchBar from '../components/SearchBar';
 import PaystackCheckout from '../components/PaystackCheckout';
-import { PRODUCT_CATEGORIES, getNewArrivals, getDiscountedProducts } from '../data/categories';
+import { PRODUCT_CATEGORIES, getNewArrivals, getDiscountedProducts, Product } from '../data/categories';
 
 interface HomePageProps {
-  onSelectCategory?: (categoryId: string) => void;
   onNavigate: (page: string, productType?: string) => void;
 }
 
@@ -15,10 +14,9 @@ const HERO_IMAGES = [
   'https://images.pexels.com/photos/3683041/pexels-photo-3683041.jpeg?auto=compress&cs=tinysrgb&w=1920',
 ];
 
-export default function HomePage({ onSelectCategory, onNavigate }: HomePageProps) {
+export default function HomePage({ onNavigate }: HomePageProps) {
   const [heroImageIndex, setHeroImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState<'drug' | 'non-drug' | 'medical-device'>('drug');
-  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -28,14 +26,10 @@ export default function HomePage({ onSelectCategory, onNavigate }: HomePageProps
   }, []);
 
   const activeCategory = PRODUCT_CATEGORIES.find((cat) => cat.type === activeTab);
-  const newArrivals = getNewArrivals();
-  const discountedProducts = getDiscountedProducts();
+  const newArrivals = useMemo(() => getNewArrivals(), []);
+  const discountedProducts = useMemo(() => getDiscountedProducts(), []);
 
-  const handleSubcategoryClick = (subcategoryId: string) => {
-    onNavigate('products', activeTab);
-  };
-
-  const ProductCard = ({ product }: any) => (
+  const ProductCard = memo(({ product }: { product: Product }) => (
     <div className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-1 group">
       <div
         className="h-48 bg-gray-200 bg-cover bg-center group-hover:scale-110 transition-transform duration-300"
@@ -67,7 +61,7 @@ export default function HomePage({ onSelectCategory, onNavigate }: HomePageProps
         </div>
       </div>
     </div>
-  );
+  ));
 
   return (
     <div className="pt-16 min-h-screen bg-white">

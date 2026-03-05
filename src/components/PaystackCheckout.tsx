@@ -30,6 +30,23 @@ export default function PaystackCheckout() {
 
   const [state, handleFormspreeSubmit] = useForm('mlgwkkpn');
 
+  // Add logging for state changes
+  useEffect(() => {
+    console.log('PaystackCheckout: showModal changed to', showModal);
+  }, [showModal]);
+
+  useEffect(() => {
+    console.log('PaystackCheckout: showOrderModal changed to', showOrderModal);
+  }, [showOrderModal]);
+
+  // Add cleanup logging
+  useEffect(() => {
+    console.log('PaystackCheckout: component mounted');
+    return () => {
+      console.log('PaystackCheckout: component unmounting');
+    };
+  }, []);
+
   // Trigger order modal when Formspree succeeds
   useEffect(() => {
     if (state.succeeded && showModal) {
