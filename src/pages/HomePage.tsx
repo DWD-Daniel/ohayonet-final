@@ -37,13 +37,16 @@ export default function HomePage({ onNavigate }: HomePageProps) {
 
   const ProductCard = memo(({ product }: { product: Product }) => (
     <div className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-1 group">
+      {/* 1. Image Section */}
       <div
         className="h-48 bg-gray-200 bg-cover bg-center group-hover:scale-110 transition-transform duration-300"
-        style={{
-          backgroundImage: `url(${product.image})`,
-        }}
+        style={{ backgroundImage: `url(${product.image})` }}
       />
+      
+      {/* 2. Content Section */}
       <div className="p-4">
+        
+        {/* Name and "New" Tag */}
         <div className="flex items-start justify-between mb-2">
           <h3 className="text-sm font-bold text-black flex-1">{product.name}</h3>
           {product.isNew && (
@@ -52,23 +55,31 @@ export default function HomePage({ onNavigate }: HomePageProps) {
             </span>
           )}
         </div>
-        <div className="flex items-center justify-between">
+
+        {/* Price and "Discount" Tag */}
+        <div className="flex items-center justify-between mb-4">
           <span className="text-lg font-bold text-red-600">{product.price}</span>
           {product.discount && (
-            <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">{product.discount}</span>
+            <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
+              {product.discount}
+            </span>
           )}
         </div>
+
+        {/* 3. The New Redirect Button */}
         <div className="mt-3">
-          <PaystackCheckout
-            productName={product.name}
-            productPrice={product.price}
-            productId={product.id}
-          />
+          <button
+            onClick={() => onNavigate('products', `${product.type}?buyId=${product.id}`)}
+            className="w-full bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1"
+          >
+            <ShoppingCart className="w-3 h-3" />
+            <span>Buy Now</span>
+          </button>
         </div>
+        
       </div>
     </div>
   ));
-
   return (
     <div className="pt-16 min-h-screen bg-white">
       <section className="relative h-72 md:h-96 flex items-center justify-center overflow-hidden">
