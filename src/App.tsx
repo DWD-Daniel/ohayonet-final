@@ -7,13 +7,15 @@ import MyOrdersPage from './pages/MyOrdersPage';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
-  const [selectedProductType, setSelectedProductType] = useState('drug');
+  const [selectedProductType, setSelectedProductType] = useState<string | undefined>(undefined);
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleNavigate = (page: string, productType?: string) => {
     setCurrentPage(page);
     if (productType) {
-      setSelectedProductType(productType);
+      // Split the string like 'non-drug?buyId=123' into category
+      const category = productType.split('?')[0];
+      setSelectedProductType(category);
     }
   };
 
@@ -35,7 +37,7 @@ function App() {
           <NewProductsPage
             initialProductType={selectedProductType}
             initialSearchQuery={searchQuery}
-            onSearchQueryUsed={() => setSearchQuery('')}
+            onSearchQueryUsed={() => {setSearchQuery('');}}
           />
         );
       case 'contact':
