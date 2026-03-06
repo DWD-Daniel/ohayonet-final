@@ -1,8 +1,9 @@
 import { useState, useEffect, memo, useMemo } from 'react';
-import { ArrowRight } from 'lucide-react';
+// FIXED: Added ShoppingCart to the imports
+import { ArrowRight, ShoppingCart } from 'lucide-react';
 import Carousel from '../components/Carousel';
 import SearchBar from '../components/SearchBar';
-import PaystackCheckout from '../components/PaystackCheckout';
+// Note: PaystackCheckout import can be removed if not used elsewhere in this file
 import { PRODUCT_CATEGORIES, getNewArrivals, getDiscountedProducts, Product } from '../data/categories';
 
 interface HomePageProps {
@@ -14,16 +15,61 @@ const HERO_IMAGES = [
   'https://images.pexels.com/photos/3683041/pexels-photo-3683041.jpeg?auto=compress&cs=tinysrgb&w=1920',
 ];
 
+// BEST PRACTICE: Define ProductCard outside the main component
+const ProductCard = memo(({ product, onNavigate }: { product: Product; onNavigate: (page: string, productType?: string) => void }) => (
+  <div className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-1 group">
+    {/* 1. Image Section */}
+    <div
+      className="h-48 bg-gray-200 bg-cover bg-center group-hover:scale-110 transition-transform duration-300"
+      style={{ backgroundImage: `url(${product.image})` }}
+    />
+    
+    {/* 2. Content Section */}
+    <div className="p-4">
+      {/* Name and "New" Tag */}
+      <div className="flex items-start justify-between mb-2">
+        <h3 className="text-sm font-bold text-black flex-1">{product.name}</h3>
+        {product.isNew && (
+          <span className="text-xs bg-red-600 text-white px-2 py-1 rounded-full ml-2 flex-shrink-0">
+            New
+          </span>
+        )}
+      </div>
+
+      {/* Price and "Discount" Tag */}
+      <div className="flex items-center justify-between mb-4">
+        <span className="text-lg font-bold text-red-600">{product.price}</span>
+        {product.discount && (
+          <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
+            {product.discount}
+          </span>
+        )}
+      </div>
+
+      {/* 3. The Redirect Button (Linked to Products Page) */}
+      <div className="mt-3">
+        <button
+          onClick={() => onNavigate('products', `${product.type}?buyId=${product.id}`)}
+          className="w-full bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1"
+        >
+          <ShoppingCart className="w-3 h-3" />
+          <span>Buy Now</span>
+        </button>
+      </div>
+    </div>
+  </div>
+));
+
 export default function HomePage({ onNavigate }: HomePageProps) {
   const [heroImageIndex, setHeroImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState<'drug' | 'non-drug' | 'medical-device'>('drug');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // PARAMETER 1 & 5: Simplified useEffect without isTransitioning or setTimeouts
+  // Smooth Hero Image transitions
   useEffect(() => {
     const interval = setInterval(() => {
       setHeroImageIndex((prev) => (prev + 1) % HERO_IMAGES.length);
-    }, 5000); // Transitions every 5 seconds
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 
@@ -35,56 +81,9 @@ export default function HomePage({ onNavigate }: HomePageProps) {
     onNavigate('products', activeTab);
   };
 
-  const ProductCard = memo(({ product }: { product: Product }) => (
-    <div className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-1 group">
-      {/* 1. Image Section */}
-      <div
-        className="h-48 bg-gray-200 bg-cover bg-center group-hover:scale-110 transition-transform duration-300"
-        style={{ backgroundImage: `url(${product.image})` }}
-      />
-      
-      {/* 2. Content Section */}
-      <div className="p-4">
-        
-        {/* Name and "New" Tag */}
-        <div className="flex items-start justify-between mb-2">
-          <h3 className="text-sm font-bold text-black flex-1">{product.name}</h3>
-          {product.isNew && (
-            <span className="text-xs bg-red-600 text-white px-2 py-1 rounded-full ml-2 flex-shrink-0">
-              New
-            </span>
-          )}
-        </div>
-
-        {/* Price and "Discount" Tag */}
-        <div className="flex items-center justify-between mb-4">
-          <span className="text-lg font-bold text-red-600">{product.price}</span>
-          {product.discount && (
-            <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
-              {product.discount}
-            </span>
-          )}
-        </div>
-
-        {/* 3. The New Redirect Button */}
-        <div className="mt-3">
-          <button
-            onClick={() => onNavigate('products', `${product.type}?buyId=${product.id}`)}
-            className="w-full bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1"
-          >
-            <ShoppingCart className="w-3 h-3" />
-            <span>Buy Now</span>
-          </button>
-        </div>
-        
-      </div>
-    </div>
-  ));
   return (
     <div className="pt-16 min-h-screen bg-white">
       <section className="relative h-72 md:h-96 flex items-center justify-center overflow-hidden">
-        
-        {/* PARAMETER 3: Mapping all images as permanent layers to eliminate flickers */}
         {HERO_IMAGES.map((image, index) => (
           <div
             key={image}
@@ -99,10 +98,8 @@ export default function HomePage({ onNavigate }: HomePageProps) {
           />
         ))}
 
-        {/* PARAMETER 4: Dedicated dark overlay for consistent text readability */}
         <div className="absolute inset-0 bg-black/50 z-1" />
 
-        {/* Content */}
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 mt-6 md:mt-0">
             Advanced Healthcare Solutions
@@ -125,7 +122,6 @@ export default function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
-      {/* ... Rest of your component (Tabs, New Arrivals, Discounts, Footer) stays exactly as it was ... */}
       <section className="py-12 bg-stone-50 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex gap-4 mb-8 justify-center">
@@ -154,7 +150,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
           <h2 className="text-3xl font-bold text-black mb-8">New Arrivals</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {newArrivals.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product.id} product={product} onNavigate={onNavigate} />
             ))}
           </div>
         </div>
@@ -165,7 +161,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
           <h2 className="text-3xl font-bold text-black mb-8">Special Discounts</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {discountedProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product.id} product={product} onNavigate={onNavigate} />
             ))}
           </div>
         </div>
