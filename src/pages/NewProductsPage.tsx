@@ -1,5 +1,4 @@
 import { useState, useMemo, useEffect } from 'react';
-import { ChevronDown } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import PaystackCheckout from '../components/PaystackCheckout';
