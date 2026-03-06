@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { useSearchParams } from 'react-router-dom'; // Import to read the URL
+import { useSearchParams } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import PaystackCheckout from '../components/PaystackCheckout';
 import { PRODUCT_CATEGORIES, Product, ProductType } from '../data/categories';
@@ -16,9 +16,10 @@ export default function NewProductsPage({
   initialSearchQuery = '',
   onSearchQueryUsed
 }: NewProductsPageProps) {
+  
   // --- REDIRECT LOGIC ---
   const [searchParams] = useSearchParams();
-  const buyId = searchParams.get('buyId'); // Extracts the ID from ?buyId=...
+  const buyId = searchParams.get('buyId');
 
   const [activeProductType, setActiveProductType] = useState<ProductType>(initialProductType as ProductType);
   const [activeSubcategory, setActiveSubcategory] = useState<string | null>(null);
@@ -39,6 +40,7 @@ export default function NewProductsPage({
 
   const filteredProducts = useMemo(() => {
     let products: Product[] = [];
+
     if (activeProductType === 'medical-device') {
       products = subcategories[0]?.products || [];
     } else if (activeSubcategory) {
@@ -90,91 +92,47 @@ export default function NewProductsPage({
               <SearchBar onSearch={setSearchQuery} value={searchQuery} placeholder="Search products..." />
             </div>
           </div>
-
-          {activeProductType !== 'medical-device' && subcategories.length > 0 && (
-            <div className="mt-4">
-              <div className="relative inline-block w-full lg:w-64">
-                <select
-                  value={activeSubcategory || ''}
-                  onChange={(e) => setActiveSubcategory(e.target.value || null)}
-                  className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg appearance-none bg-white text-black font-medium focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
-                >
-                  <option value="">All {activeCategory?.label}</option>
-                  {subcategories.map((subcategory) => (
-                    <option key={subcategory.id} value={subcategory.id}>{subcategory.name}</option>
-                  ))}
-                </select>
-                <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
-              </div>
-            </div>
-          )}
         </div>
       </div>
 
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-black mb-2">{activeCategory?.label}</h2>
-            <p className="text-gray-600">Showing {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''}</p>
-          </div>
-
-          {filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {filteredProducts.map((product) => (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {filteredProducts.map((product) => (
+              <div
+                key={product.id}
+                id={`product-${product.id}`}
+                className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-1 group"
+              >
                 <div
-                  key={product.id}
-                  id={`product-${product.id}`} // Required for the automatic scroll-to-view logic
-                  className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-1 group"
+                  className="h-48 bg-gray-200 bg-cover bg-center group-hover:scale-110 transition-transform duration-300 relative"
+                  style={{ backgroundImage: `url(${product.image})` }}
                 >
-                  <div
-                    className="h-48 bg-gray-200 bg-cover bg-center group-hover:scale-110 transition-transform duration-300 relative"
-                    style={{ backgroundImage: `url(${product.image})` }}
-                  >
-                    {/* ACCOUNTED FOR: 'NEW' and 'discount' tags preserved */}
-                    {product.isNew && (
-                      <div className="absolute top-3 right-3 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full">
-                        NEW
-                      </div>
-                    )}
-                    {product.discount && (
-                      <div className="absolute top-3 left-3 bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full">
-                        {product.discount}
-                      </div>
-                    )}
-                  </div>
+                  {product.isNew && (
+                    <div className="absolute top-3 right-3 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full">NEW</div>
+                  )}
+                  {product.discount && (
+                    <div className="absolute top-3 left-3 bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full">{product.discount}</div>
+                  )}
+                </div>
 
-                  <div className="p-4">
-                    <h3 className="text-sm font-bold text-black mb-3 line-clamp-2 h-10">{product.name}</h3>
-
-                    <div className="flex items-center justify-between">
-                      <span className="text-lg font-bold text-red-600">{product.price}</span>
-                      
-                      {/* MODIFIED: Passing autoOpen prop to handle the redirect behavior */}
-                      <PaystackCheckout
-                        productName={product.name}
-                        productPrice={product.price}
-                        productId={product.id}
-                        autoOpen={buyId === product.id} 
-                      />
-                    </div>
+                <div className="p-4">
+                  <h3 className="text-sm font-bold text-black mb-3 line-clamp-2 h-10">{product.name}</h3>
+                  <div className="flex items-center justify-between">
+                    <span className="text-lg font-bold text-red-600">{product.price}</span>
+                    <PaystackCheckout
+                      productName={product.name}
+                      productPrice={product.price}
+                      productId={product.id}
+                      autoOpen={buyId === product.id}
+                    />
                   </div>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-xl text-gray-600 mb-4">No products found</p>
-              <p className="text-gray-500">Try adjusting your search or filters</p>
-            </div>
-          )}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
-
-      <footer className="bg-black text-white py-12 mt-12">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <p className="text-gray-400">&copy; 2026 Ohayonet Pharmacy. All rights reserved.</p>
-        </div>
-      </footer>
     </div>
   );
 }
