@@ -45,12 +45,8 @@ function App() {
           <NewProductsPage
             initialProductType={selectedProductType}
             initialSearchQuery={searchQuery}
-<<<<<<< HEAD
-            initialBuyId={buyProductId} // PASS THE ID TO THE PAGE
-            onSearchQueryUsed={() => setSearchQuery('')}
-=======
-            onSearchQueryUsed={() => {setSearchQuery('');}}
->>>>>>> e6c8b703164d2fc0c1ba70ae6cf5566779b99c5f
+            initialBuyId={buyProductId} // FIXED: Passed the ID from HEAD
+            onSearchQueryUsed={() => setSearchQuery('')} // FIXED: Combined logic
           />
         );
       case 'contact':
