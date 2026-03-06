@@ -8,7 +8,7 @@ import MyOrdersPage from './pages/MyOrdersPage';
 function App() {
   // RESTORED: Missing state definitions
   const [currentPage, setCurrentPage] = useState('home');
-  const [selectedProductType, setSelectedProductType] = useState('drug');
+  const [selectedProductType, setSelectedProductType] = useState<string | undefined>(undefined);
   const [searchQuery, setSearchQuery] = useState('');
   
   // NEW: State to hold the specific product ID being bought
@@ -18,7 +18,9 @@ function App() {
   const handleNavigate = (page: string, productType?: string, productId?: string) => {
     setCurrentPage(page);
     if (productType) {
-      setSelectedProductType(productType);
+      // Split the string like 'non-drug?buyId=123' into category
+      const category = productType.split('?')[0];
+      setSelectedProductType(category);
     }
     // Set or clear the buy ID based on what was clicked
     if (productId) {
@@ -43,8 +45,12 @@ function App() {
           <NewProductsPage
             initialProductType={selectedProductType}
             initialSearchQuery={searchQuery}
+<<<<<<< HEAD
             initialBuyId={buyProductId} // PASS THE ID TO THE PAGE
             onSearchQueryUsed={() => setSearchQuery('')}
+=======
+            onSearchQueryUsed={() => {setSearchQuery('');}}
+>>>>>>> e6c8b703164d2fc0c1ba70ae6cf5566779b99c5f
           />
         );
       case 'contact':
