@@ -1,6 +1,4 @@
 import { useState, useMemo, useEffect } from 'react';
-import { ChevronDown } from 'lucide-react';
-import { useSearchParams } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import PaystackCheckout from '../components/PaystackCheckout';
 import { PRODUCT_CATEGORIES, Product, ProductType } from '../data/categories';
@@ -8,30 +6,33 @@ import { PRODUCT_CATEGORIES, Product, ProductType } from '../data/categories';
 interface NewProductsPageProps {
   initialProductType?: string;
   initialSearchQuery?: string;
+  initialBuyId?: string | null; // NEW: Receive the ID
   onSearchQueryUsed?: () => void;
 }
 
 export default function NewProductsPage({
   initialProductType = 'drug',
   initialSearchQuery = '',
+  initialBuyId = null,
   onSearchQueryUsed
 }: NewProductsPageProps) {
   
-  // --- REDIRECT LOGIC ---
-  const [searchParams] = useSearchParams();
-  const buyId = searchParams.get('buyId');
-
   const [activeProductType, setActiveProductType] = useState<ProductType>(initialProductType as ProductType);
   const [activeSubcategory, setActiveSubcategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Handle initial search from home page
+  // Keep internal category state in sync if App tells us to change categories
+  useEffect(() => {
+    if (initialProductType) {
+      setActiveProductType(initialProductType as ProductType);
+      setActiveSubcategory(null);
+    }
+  }, [initialProductType]);
+
   useEffect(() => {
     if (initialSearchQuery) {
       setSearchQuery(initialSearchQuery);
-      if (onSearchQueryUsed) {
-        onSearchQueryUsed();
-      }
+      if (onSearchQueryUsed) onSearchQueryUsed();
     }
   }, [initialSearchQuery, onSearchQueryUsed]);
 
@@ -41,82 +42,53 @@ export default function NewProductsPage({
   const filteredProducts = useMemo(() => {
     let products: Product[] = [];
 
+    // 1. Gather products for the current tab
     if (activeProductType === 'medical-device') {
       products = subcategories[0]?.products || [];
     } else if (activeSubcategory) {
       const subcategory = subcategories.find((sub) => sub.id === activeSubcategory);
       products = subcategory?.products || [];
     } else {
-      subcategories.forEach((sub) => {
-        products.push(...sub.products);
-      });
+      subcategories.forEach((sub) => { products.push(...sub.products); });
     }
 
+    // 2. THE OVERRIDE: If a specific product was clicked on the Home Page, show ONLY that product
+    if (initialBuyId) {
+      return products.filter((p) => p.id === initialBuyId);
+    }
+
+    // 3. Normal Search Bar logic
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
       products = products.filter(
         (p) => p.name.toLowerCase().includes(query) || p.price.toLowerCase().includes(query),
       );
     }
+    
     return products;
-  }, [activeProductType, activeSubcategory, searchQuery, subcategories]);
-
-  const handleProductTypeChange = (type: ProductType) => {
-    setActiveProductType(type);
-    setActiveSubcategory(null);
-  };
+  }, [activeProductType, activeSubcategory, searchQuery, subcategories, initialBuyId]);
 
   return (
     <div className="pt-16 min-h-screen bg-white">
-      {/* Sticky Filter Header */}
-      <div className="bg-stone-50 border-b border-gray-200 sticky top-16 z-40">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4 mb-4">
-            <div className="flex gap-2 mb-4 lg:mb-0 overflow-x-auto">
-              {PRODUCT_CATEGORIES.map((category) => (
-                <button
-                  key={category.type}
-                  onClick={() => handleProductTypeChange(category.type)}
-                  className={`px-4 py-2 font-semibold rounded-full whitespace-nowrap transition-all ${
-                    activeProductType === category.type
-                      ? 'bg-red-600 text-white shadow-lg'
-                      : 'bg-white text-black border-2 border-gray-200 hover:border-red-600'
-                  }`}
-                >
-                  {category.label}
-                </button>
-              ))}
-            </div>
-
-            <div className="hidden lg:block flex-1 max-w-xs">
-              <SearchBar onSearch={setSearchQuery} value={searchQuery} placeholder="Search products..." />
-            </div>
+      {/* Hide filters if we are isolating a specific product purchase */}
+      {!initialBuyId && (
+        <div className="bg-stone-50 border-b border-gray-200 sticky top-16 z-40 py-4">
+          <div className="max-w-7xl mx-auto px-6">
+            <SearchBar onSearch={setSearchQuery} value={searchQuery} placeholder="Search products..." />
           </div>
         </div>
-      </div>
+      )}
 
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {filteredProducts.map((product) => (
-              <div
-                key={product.id}
-                id={`product-${product.id}`}
-                className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-1 group"
-              >
-                <div
-                  className="h-48 bg-gray-200 bg-cover bg-center group-hover:scale-110 transition-transform duration-300 relative"
-                  style={{ backgroundImage: `url(${product.image})` }}
-                >
-                  {product.isNew && (
-                    <div className="absolute top-3 right-3 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full">NEW</div>
-                  )}
-                  {product.discount && (
-                    <div className="absolute top-3 left-3 bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full">{product.discount}</div>
-                  )}
-                </div>
-
-                <div className="p-4">
+            {filteredProducts.length > 0 ? (
+              filteredProducts.map((product) => (
+                <div key={product.id} className="bg-white rounded-xl shadow-lg p-4">
+                  <div
+                    className="h-48 bg-gray-200 bg-cover bg-center rounded-lg mb-4"
+                    style={{ backgroundImage: `url(${product.image})` }}
+                  />
                   <h3 className="text-sm font-bold text-black mb-3 line-clamp-2 h-10">{product.name}</h3>
                   <div className="flex items-center justify-between">
                     <span className="text-lg font-bold text-red-600">{product.price}</span>
@@ -124,12 +96,14 @@ export default function NewProductsPage({
                       productName={product.name}
                       productPrice={product.price}
                       productId={product.id}
-                      autoOpen={buyId === product.id}
+                      autoOpen={initialBuyId === product.id} // Automatically triggers checkout!
                     />
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p className="col-span-full text-center py-12 text-gray-500">No products found</p>
+            )}
           </div>
         </div>
       </section>

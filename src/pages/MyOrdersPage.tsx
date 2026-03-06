@@ -1,5 +1,4 @@
 import { useState, useMemo, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import PaystackCheckout from '../components/PaystackCheckout';
 import { PRODUCT_CATEGORIES, Product, ProductType } from '../data/categories';

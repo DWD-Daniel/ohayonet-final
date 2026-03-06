@@ -4,10 +4,9 @@ import SearchBar from './SearchBar';
 
 interface NavigationProps {
   currentPage: string;
-  onNavigate: (page: string, productType?: string) => void;
+  onNavigate: (page: string, productType?: string, productId?: string) => void;
   onSearchSubmit?: (query: string) => void;
 }
-
 const MAIN_CATEGORIES = [
   { id: 'drug', label: 'Drugs' },
   { id: 'non-drug', label: 'Non-Drugs' },
