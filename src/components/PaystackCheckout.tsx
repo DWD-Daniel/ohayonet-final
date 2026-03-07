@@ -66,9 +66,7 @@ export default function PaystackCheckout({ productName, productPrice, productId,
             {/* Hidden field so Formspree knows which product was bought */}
             <input type="hidden" name="Product" value={productName} />
             <input type="text" name="fullName" placeholder="Full Name" required className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-red-600 outline-none" />
-            <input type="text" name="address" placeholder="Delivery Address" required className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-red-600 outline-none" />
             <input type="tel" name="phone" placeholder="Phone Number" required className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-red-600 outline-none" />
-            <input type="email" name="email" placeholder="Email Address" required className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-red-600 outline-none" />
             <button type="submit" disabled={state.submitting} className="w-full bg-red-600 text-white py-3 rounded-lg font-semibold hover:bg-red-700 transition-all">
               {state.submitting ? 'Processing...' : 'Continue to Payment'}
             </button>
@@ -89,10 +87,10 @@ export default function PaystackCheckout({ productName, productPrice, productId,
             </button>
             {showPhoneNumber && (
               <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
-                <a href="tel:+234800000000" className="text-green-600 text-xl font-bold">+234 800 000 000</a>
+                <a href="tel:+23480160137474" className="text-green-600 text-xl font-bold">+234 80160137474</a>
               </div>
             )}
-            <button onClick={() => window.open(`https://wa.me/234800000000`, '_blank')} className="w-full bg-blue-600 text-white py-4 rounded-lg font-semibold flex items-center justify-center gap-3">
+            <button onClick={() => window.open(`https://wa.me/2348067470702`, '_blank')} className="w-full bg-blue-600 text-white py-4 rounded-lg font-semibold flex items-center justify-center gap-3">
               <MessageCircle className="w-5 h-5" /> WhatsApp Order
             </button>
           </div>
