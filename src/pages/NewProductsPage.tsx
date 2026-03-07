@@ -118,7 +118,7 @@ export default function NewProductsPage({
                     onClick={() => setActiveSubcategory(sub.id)}
                     className={`px-3 py-1.5 rounded-lg text-xs font-medium ${activeSubcategory === sub.id ? 'bg-black text-white' : 'bg-gray-100'}`}
                   >
-                    {sub.title}
+                    {sub.name}
                   </button>
                 ))}
               </div>
