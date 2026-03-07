@@ -86,15 +86,6 @@ export default function Navigation({ currentPage, onNavigate, onSearchSubmit }: 
                         {cat.label}
                       </button>
                     ))}
-                    <button
-                      onClick={() => {
-                        onNavigate('orders');
-                        setProductsDropdownOpen(false);
-                      }}
-                      className="text-left px-4 py-3 text-sm font-medium text-black hover:bg-red-50 hover:text-red-600 transition-colors"
-                    >
-                      My Orders
-                    </button>
                   </div>
                 </div>
               )}
@@ -162,16 +153,6 @@ export default function Navigation({ currentPage, onNavigate, onSearchSubmit }: 
                       {cat.label}
                     </button>
                   ))}
-                  <button
-                    onClick={() => {
-                      onNavigate('orders');
-                      setMobileMenuOpen(false);
-                      setMobileProductsOpen(false);
-                    }}
-                    className="block w-full text-left px-8 py-2 text-sm text-black hover:text-red-600 hover:bg-red-50 transition-colors"
-                  >
-                    My Orders
-                  </button>
                 </div>
               )}
             </div>
