@@ -1,5 +1,4 @@
 import { useState, useMemo, useEffect } from 'react';
-import { ChevronDown, Pill, ShoppingBag, Stethoscope } from 'lucide-react'; // Restored icons
 import SearchBar from '../components/SearchBar';
 import PaystackCheckout from '../components/PaystackCheckout';
 import { PRODUCT_CATEGORIES, Product, ProductType } from '../data/categories';
@@ -139,12 +138,37 @@ export default function NewProductsPage({
                 <h3 className="text-sm font-bold text-black mb-3 h-10 line-clamp-2">{product.name}</h3>
                 <div className="flex items-center justify-between">
                   <span className="text-lg font-bold text-red-600">{product.price}</span>
-                  <PaystackCheckout
-                    productName={product.name}
-                    productPrice={product.price}
-                    productId={product.id}
-                    autoOpen={initialBuyId === product.id} // Auto-opens modal if clicked from home
-                  />
+                  <div className="flex items-center gap-2">
+                    <PaystackCheckout
+                      productName={product.name}
+                      productPrice={product.price}
+                      productId={product.id}
+                      autoOpen={initialBuyId === product.id} // Auto-opens modal if clicked from home
+                    />
+                    <button
+                      onClick={() => {
+                        const existing = localStorage.getItem('cart');
+                        let cart: Array<any> = existing ? JSON.parse(existing) : [];
+                        const idx = cart.findIndex((item: any) => item.id === product.id);
+                        if (idx > -1) {
+                          cart[idx].quantity += 1;
+                        } else {
+                          cart.push({
+                            id: product.id,
+                            name: product.name,
+                            price: product.price,
+                            image: product.image,
+                            quantity: 1,
+                          });
+                        }
+                        localStorage.setItem('cart', JSON.stringify(cart));
+                        alert(`${product.name} added to cart`);
+                      }}
+                      className="px-3 py-1.5 bg-blue-600 text-white rounded-lg text-xs hover:bg-blue-700 transition"
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}

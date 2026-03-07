@@ -3,6 +3,7 @@ import Navigation from './components/Navigation';
 import HomePage from './pages/HomePage';
 import NewProductsPage from './pages/NewProductsPage';
 import ContactPage from './pages/ContactPage';
+import CartPage from './pages/CartPage';
 
 function App() {
   // RESTORED: Missing state definitions
@@ -50,6 +51,8 @@ function App() {
         );
       case 'contact':
         return <ContactPage />;
+      case 'cart':
+        return <CartPage />;
       default:
         return <HomePage onNavigate={handleNavigate} />;
     }

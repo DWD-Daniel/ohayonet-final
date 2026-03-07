@@ -99,6 +99,14 @@ export default function Navigation({ currentPage, onNavigate, onSearchSubmit }: 
             >
               Contact
             </button>
+            <button
+              onClick={() => onNavigate('cart')}
+              className={`text-sm font-medium transition-colors ${
+                currentPage === 'cart' ? 'text-red-600' : 'text-black hover:text-red-600'
+              }`}
+            >
+              Cart
+            </button>
           </div>
 
           <button
@@ -167,6 +175,17 @@ export default function Navigation({ currentPage, onNavigate, onSearchSubmit }: 
               }`}
             >
               Contact
+            </button>
+            <button
+              onClick={() => {
+                onNavigate('cart');
+                setMobileMenuOpen(false);
+              }}
+              className={`block w-full text-left px-4 py-2 text-sm font-medium transition-colors border-t border-gray-200 mt-2 pt-2 ${
+                currentPage === 'cart' ? 'text-red-600' : 'text-black hover:text-red-600'
+              }`}
+            >
+              Cart
             </button>
           </div>
         )}
