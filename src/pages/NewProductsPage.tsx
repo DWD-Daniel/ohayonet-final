@@ -21,6 +21,8 @@ export default function NewProductsPage({
   const [activeProductType, setActiveProductType] = useState<ProductType>(initialProductType as ProductType);
   const [activeSubcategory, setActiveSubcategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  // track whether to show all subcategories on mobile
+  const [showAllSubcategories, setShowAllSubcategories] = useState(false);
 
   // Sync state when props change (e.g., clicking a category in the Navigation)
   useEffect(() => {
@@ -104,22 +106,38 @@ export default function NewProductsPage({
 
             {/* Subcategory Menu - This is your missing "types of drugs" list */}
             {activeProductType !== 'medical-device' && (
-              <div className="mt-4 flex flex-wrap gap-2">
+              <div className="mt-4 flex flex-wrap gap-2 items-center">
                 <button
                   onClick={() => setActiveSubcategory(null)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-medium ${!activeSubcategory ? 'bg-black text-white' : 'bg-gray-100'}`}
                 >
                   All {activeCategory?.label}
                 </button>
-                {subcategories.map((sub) => (
+                {subcategories.map((sub, idx) => (
                   <button
                     key={sub.id}
                     onClick={() => setActiveSubcategory(sub.id)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-medium ${activeSubcategory === sub.id ? 'bg-black text-white' : 'bg-gray-100'}`}
+                    className={`${idx > 5 && !showAllSubcategories ? 'hidden md:block' : ''} px-3 py-1.5 rounded-lg text-xs font-medium ${
+                      activeSubcategory === sub.id ? 'bg-black text-white' : 'bg-gray-100'
+                    }`}
                   >
                     {sub.name}
                   </button>
                 ))}
+
+                {/* toggle arrow for mobile when there are more than 6 categories */}
+                {subcategories.length > 6 && (
+                  <button
+                    className="md:hidden flex items-center"
+                    onClick={() => setShowAllSubcategories((s) => !s)}
+                  >
+                    <ChevronDown
+                      className={`w-4 h-4 transition-transform ${
+                        showAllSubcategories ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+                )}
               </div>
             )}
           </div>
@@ -136,9 +154,9 @@ export default function NewProductsPage({
                   style={{ backgroundImage: `url(${product.image})` }}
                 />
                 <h3 className="text-sm font-bold text-black mb-3 h-10 line-clamp-2">{product.name}</h3>
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row items-center justify-between">
                   <span className="text-lg font-bold text-red-600">{product.price}</span>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-col sm:flex-row items-center gap-2 mt-2 sm:mt-0">
                     <PaystackCheckout
                       productName={product.name}
                       productPrice={product.price}
