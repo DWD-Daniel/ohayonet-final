@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import SearchBar from '../components/SearchBar';
 import PaystackCheckout from '../components/PaystackCheckout';
 import { PRODUCT_CATEGORIES, Product, ProductType } from '../data/categories';
+import { ChevronDown } from 'lucide-react';
 
 // Match this EXACTLY to what App.tsx passes
 interface NewProductsPageProps {
@@ -126,17 +127,20 @@ export default function NewProductsPage({
                 ))}
 
                 {/* toggle arrow for mobile when there are more than 6 categories */}
-                {subcategories.Slength > 6 && (
+                {/* FIXED: Changed .Slength to .length */}
+                {subcategories.length > 6 && (
                   <button
-                    className="md:hidden flex items-center"
+                    className="md:hidden flex items-center justify-center p-2 bg-stone-100 rounded-lg ml-auto"
                     onClick={() => setShowAllSubcategories((s) => !s)}
+                    aria-label={showAllSubcategories ? "Show less" : "Show more"}
                   >
-                    <ChevronDown
-                      className={`w-4 h-4 transition-transform ${
-                        showAllSubcategories ? 'rotate-180' : ''
-                      }`}
-                    />
-                  </button>
+                   <span className="text-[10px] font-bold mr-1">{showAllSubcategories ? 'LESS' : 'MORE'}</span>
+                   <ChevronDown
+                     className={`w-4 h-4 transition-transform duration-200 ${
+                      showAllSubcategories ? 'rotate-180' : ''
+                     }`}
+                   />
+                  </button>          
                 )}
               </div>
             )}
