@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { useState, useEffect, memo, useMemo } from 'react';
+// FIXED: Added ShoppingCart to the imports
+import { ArrowRight, ShoppingCart } from 'lucide-react';
 import Carousel from '../components/Carousel';
 import SearchBar from '../components/SearchBar';
-import PaystackCheckout from '../components/PaystackCheckout';
-import { PRODUCT_CATEGORIES, getNewArrivals, getDiscountedProducts } from '../data/categories';
+// Note: PaystackCheckout import can be removed if not used elsewhere in this file
+import { PRODUCT_CATEGORIES, getNewArrivals, getDiscountedProducts, Product } from '../data/categories';
 
 interface HomePageProps {
-  onSelectCategory?: (categoryId: string) => void;
-  onNavigate: (page: string, productType?: string) => void;
+  onNavigate: (page: string, productType?: string, productId?: string) => void;
 }
 
 const HERO_IMAGES = [
@@ -15,73 +15,96 @@ const HERO_IMAGES = [
   'https://images.pexels.com/photos/3683041/pexels-photo-3683041.jpeg?auto=compress&cs=tinysrgb&w=1920',
 ];
 
-export default function HomePage({ onSelectCategory, onNavigate }: HomePageProps) {
+// BEST PRACTICE: Define ProductCard outside the main component
+const ProductCard = memo(({ product, onNavigate }: { product: Product; onNavigate: (page: string, productType?: string) => void }) => (
+  <div className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-1 group">
+    {/* 1. Image Section */}
+    <div
+      className="h-48 bg-gray-200 bg-cover bg-center group-hover:scale-110 transition-transform duration-300"
+      style={{ backgroundImage: `url(${product.image})` }}
+    />
+    
+    {/* 2. Content Section */}
+    <div className="p-4">
+      {/* Name and "New" Tag */}
+      <div className="flex items-start justify-between mb-2">
+        <h3 className="text-sm font-bold text-black flex-1">{product.name}</h3>
+        {product.isNew && (
+          <span className="text-xs bg-red-600 text-white px-2 py-1 rounded-full ml-2 flex-shrink-0">
+            New
+          </span>
+        )}
+      </div>
+
+      {/* Price and "Discount" Tag */}
+      <div className="flex items-center justify-between mb-4">
+        <span className="text-lg font-bold text-red-600">{product.price}</span>
+        {product.discount && (
+          <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
+            {product.discount}
+          </span>
+        )}
+      </div>
+
+      {/* 3. The Redirect Button (Linked to Products Page) */}
+      <div className="mt-3">
+        <button
+          // CHANGED: Pass product.id as the distinct third argument
+          onClick={() => onNavigate('products', product.type, product.id)}
+          className="w-full bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1"
+        >
+          <ShoppingCart className="w-3 h-3" />
+          <span>Buy Now</span>
+        </button>
+      </div>
+    </div>
+  </div>
+));
+
+export default function HomePage({ onNavigate }: HomePageProps) {
   const [heroImageIndex, setHeroImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState<'drug' | 'non-drug' | 'medical-device'>('drug');
   const [searchQuery, setSearchQuery] = useState('');
 
+  // Smooth Hero Image transitions
   useEffect(() => {
     const interval = setInterval(() => {
       setHeroImageIndex((prev) => (prev + 1) % HERO_IMAGES.length);
-    }, 4000);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 
   const activeCategory = PRODUCT_CATEGORIES.find((cat) => cat.type === activeTab);
-  const newArrivals = getNewArrivals();
-  const discountedProducts = getDiscountedProducts();
+  const newArrivals = useMemo(() => getNewArrivals(), []);
+  const discountedProducts = useMemo(() => getDiscountedProducts(), []);
 
-  const handleSubcategoryClick = (subcategoryId: string) => {
+  const handleSubcategoryClick = () => {
     onNavigate('products', activeTab);
   };
 
-  const ProductCard = ({ product }: any) => (
-    <div className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-1 group">
-      <div
-        className="h-48 bg-gray-200 bg-cover bg-center group-hover:scale-110 transition-transform duration-300"
-        style={{
-          backgroundImage: `url(${product.image})`,
-        }}
-      />
-      <div className="p-4">
-        <div className="flex items-start justify-between mb-2">
-          <h3 className="text-sm font-bold text-black flex-1">{product.name}</h3>
-          {product.isNew && (
-            <span className="text-xs bg-red-600 text-white px-2 py-1 rounded-full ml-2 flex-shrink-0">
-              New
-            </span>
-          )}
-        </div>
-        <div className="flex items-center justify-between">
-          <span className="text-lg font-bold text-red-600">{product.price}</span>
-          {product.discount && (
-            <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">{product.discount}</span>
-          )}
-        </div>
-        <div className="mt-3">
-          <PaystackCheckout
-            productName={product.name}
-            productPrice={product.price}
-            productId={product.id}
-          />
-        </div>
-      </div>
-    </div>
-  );
-
   return (
     <div className="pt-16 min-h-screen bg-white">
-      <section
-        className="relative h-72 md:h-96 flex items-center justify-center overflow-hidden"
-        style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${HERO_IMAGES[heroImageIndex]})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          transition: 'background-image 0.8s ease-in-out',
-        }}
-      >
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 mt-6 md:mt-0">Advanced Healthcare Solutions</h1>
+      <section className="relative h-72 md:h-96 flex items-center justify-center overflow-hidden">
+        {HERO_IMAGES.map((image, index) => (
+          <div
+            key={image}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+              index === heroImageIndex ? 'opacity-100' : 'opacity-0'
+            }`}
+            style={{
+              backgroundImage: `url(${image})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          />
+        ))}
+
+        <div className="absolute inset-0 bg-black/50 z-1" />
+
+        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+          <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 mt-6 md:mt-0">
+            Advanced Healthcare Solutions
+          </h1>
           <p className="text-base md:text-xl text-gray-100 mb-4 md:mb-8">
             Your trusted source for quality pharmaceuticals and health products
           </p>
@@ -117,7 +140,6 @@ export default function HomePage({ onSelectCategory, onNavigate }: HomePageProps
               </button>
             ))}
           </div>
-
           {activeCategory && (
             <Carousel items={activeCategory.subcategories} onCardClick={handleSubcategoryClick} />
           )}
@@ -129,7 +151,7 @@ export default function HomePage({ onSelectCategory, onNavigate }: HomePageProps
           <h2 className="text-3xl font-bold text-black mb-8">New Arrivals</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {newArrivals.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product.id} product={product} onNavigate={onNavigate} />
             ))}
           </div>
         </div>
@@ -140,7 +162,7 @@ export default function HomePage({ onSelectCategory, onNavigate }: HomePageProps
           <h2 className="text-3xl font-bold text-black mb-8">Special Discounts</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {discountedProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product.id} product={product} onNavigate={onNavigate} />
             ))}
           </div>
         </div>

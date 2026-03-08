@@ -3,45 +3,56 @@ import Navigation from './components/Navigation';
 import HomePage from './pages/HomePage';
 import NewProductsPage from './pages/NewProductsPage';
 import ContactPage from './pages/ContactPage';
-import MyOrdersPage from './pages/MyOrdersPage';
+import CartPage from './pages/CartPage';
 
 function App() {
+  // RESTORED: Missing state definitions
   const [currentPage, setCurrentPage] = useState('home');
-  const [selectedProductType, setSelectedProductType] = useState('drug');
+  const [selectedProductType, setSelectedProductType] = useState<string | undefined>(undefined);
   const [searchQuery, setSearchQuery] = useState('');
+  
+  // NEW: State to hold the specific product ID being bought
+  const [buyProductId, setBuyProductId] = useState<string | null>(null);
 
-  const handleNavigate = (page: string, productType?: string) => {
+  // UPDATED: Accept a third parameter (productId)
+  const handleNavigate = (page: string, productType?: string, productId?: string) => {
     setCurrentPage(page);
     if (productType) {
-      setSelectedProductType(productType);
+      // Split the string like 'non-drug?buyId=123' into category
+      const category = productType.split('?')[0];
+      setSelectedProductType(category);
+    }
+    // Set or clear the buy ID based on what was clicked
+    if (productId) {
+      setBuyProductId(productId);
+    } else {
+      setBuyProductId(null);
     }
   };
 
   const handleSearchSubmit = (query: string) => {
     setSearchQuery(query);
+    setBuyProductId(null); // Clear specific product focus on general search
     setCurrentPage('products');
   };
 
   const renderPage = () => {
     switch (currentPage) {
       case 'home':
-        return (
-          <HomePage
-            onNavigate={handleNavigate}
-          />
-        );
+        return <HomePage onNavigate={handleNavigate} />;
       case 'products':
         return (
           <NewProductsPage
             initialProductType={selectedProductType}
             initialSearchQuery={searchQuery}
-            onSearchQueryUsed={() => setSearchQuery('')}
+            initialBuyId={buyProductId} // FIXED: Passed the ID from HEAD
+            onSearchQueryUsed={() => setSearchQuery('')} // FIXED: Combined logic
           />
         );
       case 'contact':
         return <ContactPage />;
-      case 'orders':
-        return <MyOrdersPage />;
+      case 'cart':
+        return <CartPage />;
       default:
         return <HomePage onNavigate={handleNavigate} />;
     }

@@ -4,10 +4,9 @@ import SearchBar from './SearchBar';
 
 interface NavigationProps {
   currentPage: string;
-  onNavigate: (page: string, productType?: string) => void;
+  onNavigate: (page: string, productType?: string, productId?: string) => void;
   onSearchSubmit?: (query: string) => void;
 }
-
 const MAIN_CATEGORIES = [
   { id: 'drug', label: 'Drugs' },
   { id: 'non-drug', label: 'Non-Drugs' },
@@ -87,15 +86,6 @@ export default function Navigation({ currentPage, onNavigate, onSearchSubmit }: 
                         {cat.label}
                       </button>
                     ))}
-                    <button
-                      onClick={() => {
-                        onNavigate('orders');
-                        setProductsDropdownOpen(false);
-                      }}
-                      className="text-left px-4 py-3 text-sm font-medium text-black hover:bg-red-50 hover:text-red-600 transition-colors"
-                    >
-                      My Orders
-                    </button>
                   </div>
                 </div>
               )}
@@ -108,6 +98,14 @@ export default function Navigation({ currentPage, onNavigate, onSearchSubmit }: 
               }`}
             >
               Contact
+            </button>
+            <button
+              onClick={() => onNavigate('cart')}
+              className={`text-sm font-medium transition-colors ${
+                currentPage === 'cart' ? 'text-red-600' : 'text-black hover:text-red-600'
+              }`}
+            >
+              Cart
             </button>
           </div>
 
@@ -163,16 +161,6 @@ export default function Navigation({ currentPage, onNavigate, onSearchSubmit }: 
                       {cat.label}
                     </button>
                   ))}
-                  <button
-                    onClick={() => {
-                      onNavigate('orders');
-                      setMobileMenuOpen(false);
-                      setMobileProductsOpen(false);
-                    }}
-                    className="block w-full text-left px-8 py-2 text-sm text-black hover:text-red-600 hover:bg-red-50 transition-colors"
-                  >
-                    My Orders
-                  </button>
                 </div>
               )}
             </div>
@@ -187,6 +175,17 @@ export default function Navigation({ currentPage, onNavigate, onSearchSubmit }: 
               }`}
             >
               Contact
+            </button>
+            <button
+              onClick={() => {
+                onNavigate('cart');
+                setMobileMenuOpen(false);
+              }}
+              className={`block w-full text-left px-4 py-2 text-sm font-medium transition-colors border-t border-gray-200 mt-2 pt-2 ${
+                currentPage === 'cart' ? 'text-red-600' : 'text-black hover:text-red-600'
+              }`}
+            >
+              Cart
             </button>
           </div>
         )}
