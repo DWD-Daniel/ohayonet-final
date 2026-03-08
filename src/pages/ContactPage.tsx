@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
-import customerImg from './assets/customer.png';
+import customerImg from '../assets/customer.png';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -28,7 +28,7 @@ export default function ContactPage() {
         className="relative py-32"
         style={{
           backgroundImage:
-            'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${customerImg})',
+            'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), customerImg',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed',
