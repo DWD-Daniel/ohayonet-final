@@ -126,7 +126,7 @@ export default function NewProductsPage({
                 ))}
 
                 {/* toggle arrow for mobile when there are more than 6 categories */}
-                {subcategories.length > 6 && (
+                {subcategories.Slength > 6 && (
                   <button
                     className="md:hidden flex items-center"
                     onClick={() => setShowAllSubcategories((s) => !s)}
