@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import customerImg from '../assets/customer.png';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -24,14 +25,13 @@ export default function ContactPage() {
   return (
     <div className="pt-16 min-h-screen">
       <section
-        className="relative py-32"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(https://images.pexels.com/photos/236380/pexels-photo-236380.jpeg?auto=compress&cs=tinysrgb&w=1920)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed',
-        }}
+       className="relative py-32"
+       style={{
+       backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${customerImg})`,
+       backgroundSize: 'cover',
+       backgroundPosition: 'center',
+       backgroundAttachment: 'fixed',
+       }}
       >
         <div className="max-w-7xl mx-auto px-6 text-center">
           <h1 className="text-5xl font-bold text-white mb-6">Contact Us</h1>
