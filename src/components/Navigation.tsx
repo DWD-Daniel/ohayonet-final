@@ -8,6 +8,13 @@ interface NavigationProps {
   onSearchSubmit?: (query: string) => void;
 }
 
+const handleLinkClick = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth' // Use 'auto' for an instant jump
+  });
+};
+
 const MAIN_CATEGORIES = [
   { id: 'drug', label: 'Drugs' },
   { id: 'non-drug', label: 'Non-Drugs' },
@@ -18,7 +25,7 @@ export default function Navigation({ onNavigate, onSearchSubmit }: NavigationPro
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productsDropdownOpen, setProductsDropdownOpen] = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
-  
+
   const location = useLocation(); // Hook to get the current URL path
 
   const handleProductTypeClick = (type: string) => {
@@ -48,6 +55,7 @@ export default function Navigation({ onNavigate, onSearchSubmit }: NavigationPro
           {/* Logo - Changed to Link */}
           <Link
             to="/"
+            onClick={handleLinkClick}
             className="flex items-center gap-1 sm:gap-2 text-lg sm:text-2xl font-semibold text-black hover:text-red-600 transition-colors flex-shrink-0"
           >
             <Pill className="w-8 h-8 text-red-600 flex-shrink-0" />
@@ -61,9 +69,9 @@ export default function Navigation({ onNavigate, onSearchSubmit }: NavigationPro
           <div className="hidden md:flex items-center gap-6">
             <Link
               to="/"
-              className={`text-sm font-medium transition-colors ${
-                isActive('home') ? 'text-red-600' : 'text-black hover:text-red-600'
-              }`}
+              onClick={handleLinkClick}
+              className={`text-sm font-medium transition-colors ${isActive('home') ? 'text-red-600' : 'text-black hover:text-red-600'
+                }`}
             >
               Home
             </Link>
@@ -72,9 +80,8 @@ export default function Navigation({ onNavigate, onSearchSubmit }: NavigationPro
               <button
                 onMouseEnter={() => setProductsDropdownOpen(true)}
                 onMouseLeave={() => setProductsDropdownOpen(false)}
-                className={`text-sm font-medium transition-colors flex items-center gap-1 ${
-                  isActive('products') ? 'text-red-600' : 'text-black hover:text-red-600'
-                }`}
+                className={`text-sm font-medium transition-colors flex items-center gap-1 ${isActive('products') ? 'text-red-600' : 'text-black hover:text-red-600'
+                  }`}
               >
                 Products
                 <ChevronDown className="w-4 h-4" />
@@ -90,7 +97,10 @@ export default function Navigation({ onNavigate, onSearchSubmit }: NavigationPro
                     {MAIN_CATEGORIES.map((cat) => (
                       <button
                         key={cat.id}
-                        onClick={() => handleProductTypeClick(cat.id)}
+                        onClick={() => {
+                          handleProductTypeClick(cat.id);
+                          handleLinkClick();
+                        }}
                         className="text-left px-4 py-3 text-sm font-medium text-black hover:bg-red-50 hover:text-red-600 border-b border-gray-100 transition-colors"
                       >
                         {cat.label}
@@ -103,18 +113,18 @@ export default function Navigation({ onNavigate, onSearchSubmit }: NavigationPro
 
             <Link
               to="/contact"
-              className={`text-sm font-medium transition-colors ${
-                isActive('contact') ? 'text-red-600' : 'text-black hover:text-red-600'
-              }`}
+              onClick={handleLinkClick}
+              className={`text-sm font-medium transition-colors ${isActive('contact') ? 'text-red-600' : 'text-black hover:text-red-600'
+                }`}
             >
               Contact
             </Link>
-            
+
             <Link
               to="/cart"
-              className={`text-sm font-medium transition-colors ${
-                isActive('cart') ? 'text-red-600' : 'text-black hover:text-red-600'
-              }`}
+              onClick={handleLinkClick}
+              className={`text-sm font-medium transition-colors ${isActive('cart') ? 'text-red-600' : 'text-black hover:text-red-600'
+                }`}
             >
               Cart
             </Link>
@@ -137,10 +147,12 @@ export default function Navigation({ onNavigate, onSearchSubmit }: NavigationPro
 
             <Link
               to="/"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`block w-full text-left px-4 py-2 text-sm font-medium transition-colors ${
-                isActive('home') ? 'text-red-600' : 'text-black hover:text-red-600'
-              }`}
+              onClick={() => {
+                setMobileMenuOpen(false);
+                handleLinkClick();
+              }}
+              className={`block w-full text-left px-4 py-2 text-sm font-medium transition-colors ${isActive('home') ? 'text-red-600' : 'text-black hover:text-red-600'
+                }`}
             >
               Home
             </Link>
@@ -148,15 +160,13 @@ export default function Navigation({ onNavigate, onSearchSubmit }: NavigationPro
             <div className="border-t border-gray-200 mt-2 pt-2">
               <button
                 onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
-                className={`block w-full text-left px-4 py-2 text-sm font-medium transition-colors flex items-center justify-between ${
-                  isActive('products') ? 'text-red-600' : 'text-black hover:text-red-600'
-                }`}
+                className={`block w-full text-left px-4 py-2 text-sm font-medium transition-colors flex items-center justify-between ${isActive('products') ? 'text-red-600' : 'text-black hover:text-red-600'
+                  }`}
               >
                 Products
                 <ChevronDown
-                  className={`w-4 h-4 transition-transform ${
-                    mobileProductsOpen ? 'rotate-180' : ''
-                  }`}
+                  className={`w-4 h-4 transition-transform ${mobileProductsOpen ? 'rotate-180' : ''
+                    }`}
                 />
               </button>
 
@@ -165,7 +175,10 @@ export default function Navigation({ onNavigate, onSearchSubmit }: NavigationPro
                   {MAIN_CATEGORIES.map((cat) => (
                     <button
                       key={cat.id}
-                      onClick={() => handleProductTypeClick(cat.id)}
+                      onClick={() => {
+                        handleProductTypeClick(cat.id);
+                        handleLinkClick();
+                      }}
                       className="block w-full text-left px-8 py-2 text-sm text-black hover:text-red-600 hover:bg-red-50 transition-colors"
                     >
                       {cat.label}
@@ -177,20 +190,24 @@ export default function Navigation({ onNavigate, onSearchSubmit }: NavigationPro
 
             <Link
               to="/contact"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`block w-full text-left px-4 py-2 text-sm font-medium transition-colors border-t border-gray-200 mt-2 pt-2 ${
-                isActive('contact') ? 'text-red-600' : 'text-black hover:text-red-600'
-              }`}
+              onClick={() => {
+                setMobileMenuOpen(false);
+                handleLinkClick();
+              }}
+              className={`block w-full text-left px-4 py-2 text-sm font-medium transition-colors border-t border-gray-200 mt-2 pt-2 ${isActive('contact') ? 'text-red-600' : 'text-black hover:text-red-600'
+                }`}
             >
               Contact
             </Link>
 
             <Link
               to="/cart"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`block w-full text-left px-4 py-2 text-sm font-medium transition-colors border-t border-gray-200 mt-2 pt-2 ${
-                isActive('cart') ? 'text-red-600' : 'text-black hover:text-red-600'
-              }`}
+              onClick={() => {
+                setMobileMenuOpen(false);
+                handleLinkClick();
+              }}
+              className={`block w-full text-left px-4 py-2 text-sm font-medium transition-colors border-t border-gray-200 mt-2 pt-2 ${isActive('cart') ? 'text-red-600' : 'text-black hover:text-red-600'
+                }`}
             >
               Cart
             </Link>
