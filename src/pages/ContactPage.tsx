@@ -1,26 +1,10 @@
 import { useState } from 'react';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { useForm, ValidationError } from '@formspree/react';
 import customerImg from '../assets/customer.png';
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: '',
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Form submitted:', formData);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const [state, handleSubmit] = useForm("mnjowjzk");
 
   return (
     <div className="pt-16 min-h-screen">
@@ -87,76 +71,80 @@ export default function ContactPage() {
             </div>
 
             <div className="bg-white rounded-2xl shadow-xl p-8">
-              <h3 className="text-2xl font-bold text-black mb-6">Send Us a Message</h3>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-semibold text-black mb-2">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
-                    required
-                  />
+              {state.succeeded ? (
+                <div className="text-center">
+                  <h3 className="text-2xl font-bold text-black mb-6">Thank You!</h3>
+                  <p className="text-gray-600">Your message has been sent successfully. We'll get back to you soon.</p>
                 </div>
+              ) : (
+                <>
+                  <h3 className="text-2xl font-bold text-black mb-6">Send Us a Message</h3>
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div>
+                      <label htmlFor="name" className="block text-sm font-semibold text-black mb-2">
+                        Full Name
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
+                        required
+                      />
+                    </div>
 
-                <div>
-                  <label htmlFor="email" className="block text-sm font-semibold text-black mb-2">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
-                    required
-                  />
-                </div>
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-semibold text-black mb-2">
+                        Email Address
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
+                        required
+                      />
+                      <ValidationError prefix="Email" field="email" errors={state.errors} />
+                    </div>
 
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-semibold text-black mb-2">
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
-                    required
-                  />
-                </div>
+                    <div>
+                      <label htmlFor="phone" className="block text-sm font-semibold text-black mb-2">
+                        Phone Number
+                      </label>
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
+                        required
+                      />
+                    </div>
 
-                <div>
-                  <label htmlFor="message" className="block text-sm font-semibold text-black mb-2">
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    rows={5}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent resize-none"
-                    required
-                  />
-                </div>
+                    <div>
+                      <label htmlFor="message" className="block text-sm font-semibold text-black mb-2">
+                        Message
+                      </label>
+                      <textarea
+                        id="message"
+                        name="message"
+                        rows={5}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent resize-none"
+                        required
+                      />
+                      <ValidationError prefix="Message" field="message" errors={state.errors} />
+                    </div>
 
-                <button
-                  type="submit"
-                  className="w-full bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-lg font-semibold transition-all hover:scale-[1.02] inline-flex items-center justify-center gap-2"
-                >
-                  Send Message
-                  <Send className="w-5 h-5" />
-                </button>
-              </form>
+                    <button
+                      type="submit"
+                      disabled={state.submitting}
+                      className="w-full bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white px-8 py-4 rounded-lg font-semibold transition-all hover:scale-[1.02] inline-flex items-center justify-center gap-2"
+                    >
+                      {state.submitting ? 'Sending...' : 'Send Message'}
+                      <Send className="w-5 h-5" />
+                    </button>
+                  </form>
+                </>
+              )}
             </div>
           </div>
         </div>

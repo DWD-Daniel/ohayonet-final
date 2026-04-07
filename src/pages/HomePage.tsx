@@ -3,6 +3,7 @@ import { useState, useEffect, memo, useMemo } from 'react';
 import { ArrowRight, ShoppingCart } from 'lucide-react';
 import Carousel from '../components/Carousel';
 import SearchBar from '../components/SearchBar';
+import mySectionBg from '../assets/pharmacy-interior.jpg';
 // Note: PaystackCheckout import can be removed if not used elsewhere in this file
 import { PRODUCT_CATEGORIES, getNewArrivals, getDiscountedProducts, Product } from '../data/categories';
 
@@ -146,9 +147,15 @@ export default function HomePage({ onNavigate, onSearchSubmit }: HomePageProps) 
         </div>
       </section>
 
-      <section className="py-16 bg-white">
+      <section 
+      className="relative py-16 bg-cover bg-center bg-no-repeat" 
+      style={{ 
+        // 2. Use the imported variable and add a slight dark tint so text stays readable
+        backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${mySectionBg})` 
+      }}
+      >
         <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-black mb-8">New Arrivals</h2>
+          <h2 className="text-3xl font-bold text-white mb-8">New Arrivals</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {newArrivals.map((product) => (
               <ProductCard key={product.id} product={product} onNavigate={onNavigate} />
@@ -168,13 +175,36 @@ export default function HomePage({ onNavigate, onSearchSubmit }: HomePageProps) 
         </div>
       </section>
 
-      <footer className="bg-black text-white py-12">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <p className="text-gray-400">
-            &copy; 2026 Ohayonet Pharmacy. All rights reserved. | Terms & Conditions | Privacy Policy
-          </p>
-        </div>
-      </footer>
+     <footer className="bg-black text-white py-12">
+  <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center md:items-start space-y-8 md:space-y-0">
+    
+    {/* Left Side: Name & Address */}
+    <div className="text-center md:text-left">
+      <h3 className="font-semibold text-lg mb-2">Ohayonet Pharmacy</h3>
+      <p className="text-gray-400">123 Health Avenue, Medical District</p>
+      <p className="text-gray-400">City, State, ZIP Code</p>
+      <a 
+        href="mailto:ohayonetpharmacy@gmail.com" 
+        className="text-blue-400 hover:text-blue-300 transition-colors block mt-2"
+      >
+        ohayonetpharmacy@gmail.com
+      </a>
+    </div>
+
+    {/* Right Side: Legal & Copyright */}
+    <div className="text-center md:text-right flex flex-col items-center md:items-end">
+      <p className="text-gray-400">
+        &copy; 2026 Ohayonet Pharmacy. All rights reserved.
+      </p>
+      <div className="mt-2 space-x-4 text-sm text-gray-500">
+        <a href="#" className="hover:text-white transition-colors">Terms & Conditions</a>
+        <span>|</span>
+        <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
     </div>
   );
 }

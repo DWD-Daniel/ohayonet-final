@@ -3,6 +3,7 @@ import SearchBar from '../components/SearchBar';
 import PaystackCheckout from '../components/PaystackCheckout';
 import { PRODUCT_CATEGORIES, Product, ProductType } from '../data/categories';
 import { ChevronDown } from 'lucide-react';
+import backgroundProduct from '../assets/product-bg.jpg'; // New background image for the products page
 
 // Match this EXACTLY to what App.tsx passes
 interface NewProductsPageProps {
@@ -18,7 +19,7 @@ export default function NewProductsPage({
   initialBuyId = null,
   onSearchQueryUsed
 }: NewProductsPageProps) {
-  
+
   const [activeProductType, setActiveProductType] = useState<ProductType>(initialProductType as ProductType);
   const [activeSubcategory, setActiveSubcategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -73,12 +74,15 @@ export default function NewProductsPage({
         (p) => p.name.toLowerCase().includes(query) || p.price.toLowerCase().includes(query),
       );
     }
-    
+
     return products;
   }, [activeProductType, activeSubcategory, searchQuery, subcategories, initialBuyId]);
 
   return (
-    <div className="pt-16 min-h-screen bg-white">
+    <div
+      className="pt-16 min-h-screen bg-cover bg-center"
+      style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${backgroundProduct})` }}
+    >
       {/* Category & Subcategory Menus (Hidden if buying a specific item) */}
       {!initialBuyId && (
         <div className="bg-stone-50 border-b border-gray-200 sticky top-16 z-40">
@@ -92,9 +96,8 @@ export default function NewProductsPage({
                       setActiveProductType(category.type as ProductType);
                       setActiveSubcategory(null);
                     }}
-                    className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
-                      activeProductType === category.type ? 'bg-red-600 text-white' : 'bg-white border text-gray-600'
-                    }`}
+                    className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${activeProductType === category.type ? 'bg-red-600 text-white' : 'bg-white border text-gray-600'
+                      }`}
                   >
                     {category.label}
                   </button>
@@ -117,86 +120,87 @@ export default function NewProductsPage({
                 {subcategories.map((sub, idx) => (
                   <button
                     key={sub.id}
-                    onClick={() => setActiveSubcategory(sub.id)}
-                    className={`${idx > 5 && !showAllSubcategories ? 'hidden md:block' : ''} px-3 py-1.5 rounded-lg text-xs font-medium ${
-                      activeSubcategory === sub.id ? 'bg-black text-white' : 'bg-gray-100'
-                    }`}
+                    onClick={() => {
+                      setActiveSubcategory(sub.id);
+                      window.scrollTo({top: 0, behavior: 'smooth' });
+                    }}
+                    className={`${idx > 5 && !showAllSubcategories ? 'hidden md:block' : ''} px-3 py-1.5 rounded-lg text-xs font-medium ${activeSubcategory === sub.id ? 'bg-black text-white' : 'bg-gray-100'}`}
                   >
-                    {sub.name}
-                  </button>
-                ))}
+                {sub.name}
+              </button>
+            ))}
 
-                {/* toggle arrow for mobile when there are more than 6 categories */}
-                {/* FIXED: Changed .Slength to .length */}
-                {subcategories.length > 6 && (
-                  <button
-                    className="md:hidden flex items-center justify-center p-2 bg-stone-100 rounded-lg ml-auto"
-                    onClick={() => setShowAllSubcategories((s) => !s)}
-                    aria-label={showAllSubcategories ? "Show less" : "Show more"}
-                  >
-                   <span className="text-[10px] font-bold mr-1">{showAllSubcategories ? 'LESS' : 'MORE'}</span>
-                   <ChevronDown
-                     className={`w-4 h-4 transition-transform duration-200 ${
-                      showAllSubcategories ? 'rotate-180' : ''
-                     }`}
-                   />
-                  </button>          
-                )}
-              </div>
+            {/* toggle arrow for mobile when there are more than 6 categories */}
+            {/* FIXED: Changed .Slength to .length */}
+            {subcategories.length > 6 && (
+              <button
+                className="md:hidden flex items-center justify-center p-2 bg-stone-100 rounded-lg ml-auto"
+                onClick={() => setShowAllSubcategories((s) => !s)}
+                aria-label={showAllSubcategories ? "Show less" : "Show more"}
+              >
+                <span className="text-[10px] font-bold mr-1">{showAllSubcategories ? 'LESS' : 'MORE'}</span>
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform duration-200 ${showAllSubcategories ? 'rotate-180' : ''
+                    }`}
+                />
+              </button>
             )}
           </div>
+            )}
         </div>
-      )}
+        </div>
+  )
+}
 
-      <section className="py-12">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {filteredProducts.map((product) => (
-              <div key={product.id} className="bg-white rounded-xl shadow-lg p-4">
-                <div
-                  className="h-48 bg-gray-200 bg-cover bg-center rounded-lg mb-4"
-                  style={{ backgroundImage: `url(${product.image})` }}
-                />
-                <h3 className="text-sm font-bold text-black mb-3 h-10 line-clamp-2">{product.name}</h3>
-                <div className="flex flex-col sm:flex-row items-center justify-between">
-                  <span className="text-lg font-bold text-red-600">{product.price}</span>
-                  <div className="flex flex-col sm:flex-row items-center gap-2 mt-2 sm:mt-0">
-                    <PaystackCheckout
-                      productName={product.name}
-                      productPrice={product.price}
-                      productId={product.id}
-                      autoOpen={initialBuyId === product.id} // Auto-opens modal if clicked from home
-                    />
-                    <button
-                      onClick={() => {
-                        const existing = localStorage.getItem('cart');
-                        let cart: Array<any> = existing ? JSON.parse(existing) : [];
-                        const idx = cart.findIndex((item: any) => item.id === product.id);
-                        if (idx > -1) {
-                          cart[idx].quantity += 1;
-                        } else {
-                          cart.push({
-                            id: product.id,
-                            name: product.name,
-                            price: product.price,
-                            image: product.image,
-                            quantity: 1,
-                          });
-                        }
-                        localStorage.setItem('cart', JSON.stringify(cart));
-                        alert(`${product.name} added to cart`);
-                      }}
-                      className="px-3 py-1.5 bg-blue-600 text-white rounded-lg text-xs hover:bg-blue-700 transition"
-                    >
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
+<section className="py-12">
+  <div className="max-w-7xl mx-auto px-6">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      {filteredProducts.map((product) => (
+        <div key={product.id} className="bg-white rounded-xl shadow-lg p-4">
+          <div
+            className="h-48 bg-gray-200 bg-cover bg-center rounded-lg mb-4"
+            style={{ backgroundImage: `url(${product.image})` }}
+          />
+          <h3 className="text-sm font-bold text-black mb-3 h-10 line-clamp-2">{product.name}</h3>
+          <div className="flex flex-col sm:flex-row items-center justify-between">
+            <span className="text-lg font-bold text-red-600">{product.price}</span>
+            <div className="flex flex-col sm:flex-row items-center gap-2 mt-2 sm:mt-0">
+              <PaystackCheckout
+                productName={product.name}
+                productPrice={product.price}
+                productId={product.id}
+                autoOpen={initialBuyId === product.id} // Auto-opens modal if clicked from home
+              />
+              <button
+                onClick={() => {
+                  const existing = localStorage.getItem('cart');
+                  let cart: Array<any> = existing ? JSON.parse(existing) : [];
+                  const idx = cart.findIndex((item: any) => item.id === product.id);
+                  if (idx > -1) {
+                    cart[idx].quantity += 1;
+                  } else {
+                    cart.push({
+                      id: product.id,
+                      name: product.name,
+                      price: product.price,
+                      image: product.image,
+                      quantity: 1,
+                    });
+                  }
+                  localStorage.setItem('cart', JSON.stringify(cart));
+                  alert(`${product.name} added to cart`);
+                }}
+                className="px-3 py-1.5 bg-blue-600 text-white rounded-lg text-xs hover:bg-blue-700 transition"
+              >
+                Add to Cart
+              </button>
+            </div>
           </div>
         </div>
-      </section>
+      ))}
     </div>
+  </div>
+</section>
+    </div >
   );
 }
