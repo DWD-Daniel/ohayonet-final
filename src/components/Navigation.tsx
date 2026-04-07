@@ -148,8 +148,8 @@ export default function Navigation({ onNavigate, onSearchSubmit }: NavigationPro
             <Link
               to="/"
               onClick={() => {
-                setMobileMenuOpen(false);
                 handleLinkClick();
+                setMobileMenuOpen(false);
               }}
               className={`block w-full text-left px-4 py-2 text-sm font-medium transition-colors ${isActive('home') ? 'text-red-600' : 'text-black hover:text-red-600'
                 }`}
@@ -176,8 +176,8 @@ export default function Navigation({ onNavigate, onSearchSubmit }: NavigationPro
                     <button
                       key={cat.id}
                       onClick={() => {
-                        handleProductTypeClick(cat.id);
                         handleLinkClick();
+                        handleProductTypeClick(cat.id);
                       }}
                       className="block w-full text-left px-8 py-2 text-sm text-black hover:text-red-600 hover:bg-red-50 transition-colors"
                     >
@@ -191,8 +191,9 @@ export default function Navigation({ onNavigate, onSearchSubmit }: NavigationPro
             <Link
               to="/contact"
               onClick={() => {
-                setMobileMenuOpen(false);
                 handleLinkClick();
+                setMobileMenuOpen(false);
+
               }}
               className={`block w-full text-left px-4 py-2 text-sm font-medium transition-colors border-t border-gray-200 mt-2 pt-2 ${isActive('contact') ? 'text-red-600' : 'text-black hover:text-red-600'
                 }`}
@@ -203,8 +204,8 @@ export default function Navigation({ onNavigate, onSearchSubmit }: NavigationPro
             <Link
               to="/cart"
               onClick={() => {
-                setMobileMenuOpen(false);
                 handleLinkClick();
+                setMobileMenuOpen(false);
               }}
               className={`block w-full text-left px-4 py-2 text-sm font-medium transition-colors border-t border-gray-200 mt-2 pt-2 ${isActive('cart') ? 'text-red-600' : 'text-black hover:text-red-600'
                 }`}
