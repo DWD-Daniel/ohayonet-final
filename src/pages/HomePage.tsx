@@ -8,6 +8,7 @@ import { PRODUCT_CATEGORIES, getNewArrivals, getDiscountedProducts, Product } fr
 
 interface HomePageProps {
   onNavigate: (page: string, productType?: string, productId?: string) => void;
+  onSearchSubmit?: (query: string) => void;
 }
 
 const HERO_IMAGES = [
@@ -61,10 +62,9 @@ const ProductCard = memo(({ product, onNavigate }: { product: Product; onNavigat
   </div>
 ));
 
-export default function HomePage({ onNavigate }: HomePageProps) {
+export default function HomePage({ onNavigate, onSearchSubmit }: HomePageProps) {
   const [heroImageIndex, setHeroImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState<'drug' | 'non-drug' | 'medical-device'>('drug');
-  const [searchQuery, setSearchQuery] = useState('');
 
   // Smooth Hero Image transitions
   useEffect(() => {
@@ -110,7 +110,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
           </p>
 
           <div className="md:hidden mb-6">
-            <SearchBar onSearch={setSearchQuery} placeholder="Search products..." />
+            <SearchBar onSubmit={onSearchSubmit} placeholder="Search products..." />
           </div>
 
           <button

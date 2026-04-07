@@ -48,7 +48,7 @@ function App() {
       />
 
       <Routes>
-        <Route path="/" element={<HomePage onNavigate={handleNavigate} />} />
+        <Route path="/" element={<HomePage onNavigate={handleNavigate} onSearchSubmit={handleSearchSubmit} />} />
         
         <Route path="/products" element={
           <NewProductsPage
