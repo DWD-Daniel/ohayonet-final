@@ -28,6 +28,37 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     label: 'Drugs',
     subcategories: [
       {
+        id: 'antidiabetics',
+        name: 'Anti-diabetic',
+        image: 'https://images.unsplash.com/photo-1685485276219-cbdf9309be1a?q=80&w=756&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        products: [
+          { id: 'ad-001', name: 'Metformin 500mg', price: '$11.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+          { id: 'ad-002', name: 'Glibenclamide 5mg', price: '$13.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', discount: '18% OFF' },
+          { id: 'ad-003', name: 'Insulin Glargine', price: '$45.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isNew: true },
+        ],
+      },
+      {
+        id: 'antihypertensives',
+        name: 'Anti-hypertensive',
+        image: 'https://images.unsplash.com/photo-1615486511484-92e172cc4fe0?q=80&w=871&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        products: [
+          { id: 'ah-001', name: 'Lisinopril 10mg', price: '$14.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+          { id: 'ah-002', name: 'Metoprolol 50mg', price: '$16.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', discount: '12% OFF' },
+          { id: 'ah-003', name: 'Amlodipine 5mg', price: '$18.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isNew: true },
+          { id: 'ah-004', name: 'Losartan 100mg', price: '$21.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+        ],
+      },
+      {
+        id: 'eye-ear-drops',
+        name: 'Eye Drops',
+        image: 'https://images.unsplash.com/photo-1470162415307-7ed32bad0a5a?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        products: [
+          { id: 'eed-001', name: 'Artificial Tears', price: '$8.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isNew: true },
+          { id: 'eed-002', name: 'Antibiotic Eye Drops', price: '$12.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+          { id: 'eed-003', name: 'Antibiotic Ear Drops', price: '$11.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', discount: '10% OFF' },
+        ],
+      },
+      {
         id: 'anti-pile',
         name: 'Anti-pile',
         image: 'https://images.unsplash.com/photo-1576091160399-1c84d68d6e87?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -123,29 +154,8 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
         ],
       },
       {
-        id: 'eye-ear-drops',
-        name: 'Eye Drops',
-        image: 'https://images.unsplash.com/photo-1470162415307-7ed32bad0a5a?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        products: [
-          { id: 'eed-001', name: 'Artificial Tears', price: '$8.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isNew: true },
-          { id: 'eed-002', name: 'Antibiotic Eye Drops', price: '$12.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-          { id: 'eed-003', name: 'Antibiotic Ear Drops', price: '$11.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', discount: '10% OFF' },
-        ],
-      },
-      {
-        id: 'antihypertensives',
-        name: 'Anti-hypertensive',
-        image: 'https://images.unsplash.com/photo-1615486511484-92e172cc4fe0?q=80&w=871&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        products: [
-          { id: 'ah-001', name: 'Lisinopril 10mg', price: '$14.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-          { id: 'ah-002', name: 'Metoprolol 50mg', price: '$16.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', discount: '12% OFF' },
-          { id: 'ah-003', name: 'Amlodipine 5mg', price: '$18.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isNew: true },
-          { id: 'ah-004', name: 'Losartan 100mg', price: '$21.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-        ],
-      },
-      {
         id: 'antilipidemics',
-        name: 'Antilipidemics',
+        name: 'Antilipidemics (Cholesterol Management)',
         image: 'https://images.unsplash.com/photo-1542884841-9f546e727bca?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         products: [
           { id: 'al-001', name: 'Atorvastatin 20mg', price: '$19.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', discount: '15% OFF' },
@@ -155,7 +165,7 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
       },
       {
         id: 'topicals',
-        name: 'Topicals',
+        name: 'Topicals & Skincare',
         image: 'https://images.unsplash.com/photo-1619798049549-a23f03c1e8d1?q=80&w=464&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         products: [
           { id: 'tp-001', name: 'Hydrocortisone Cream 1%', price: '$9.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
@@ -173,16 +183,7 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
           { id: 'af-003', name: 'Miconazole Powder', price: '$9.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isNew: true },
         ],
       },
-      {
-        id: 'antidiabetics',
-        name: 'Anti-diabetic',
-        image: 'https://images.unsplash.com/photo-1685485276219-cbdf9309be1a?q=80&w=756&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        products: [
-          { id: 'ad-001', name: 'Metformin 500mg', price: '$11.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-          { id: 'ad-002', name: 'Glibenclamide 5mg', price: '$13.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', discount: '18% OFF' },
-          { id: 'ad-003', name: 'Insulin Glargine', price: '$45.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isNew: true },
-        ],
-      },
+
     ],
   },
   {
