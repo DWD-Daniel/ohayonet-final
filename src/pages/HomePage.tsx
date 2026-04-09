@@ -22,12 +22,12 @@ const ProductCard = memo(({ product, onNavigate }: { product: Product; onNavigat
   <div className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-1 group">
     {/* 1. Image Section */}
     <div
-      className="h-48 bg-gray-200 bg-cover bg-center group-hover:scale-110 transition-transform duration-300"
+      className="h-40 bg-gray-200 bg-cover bg-center group-hover:scale-110 transition-transform duration-300"
       style={{ backgroundImage: `url(${product.image})` }}
     />
     
     {/* 2. Content Section */}
-    <div className="p-4">
+    <div className="p-3">
       {/* Name and "New" Tag */}
       <div className="flex items-start justify-between mb-2">
         <h3 className="text-sm font-bold text-black flex-1">{product.name}</h3>
@@ -94,7 +94,7 @@ export default function HomePage({ onNavigate, onSearchSubmit }: HomePageProps) 
 
   return (
     <div className="pt-16 min-h-screen bg-white">
-      <section className="relative h-72 md:h-96 flex items-center justify-center overflow-hidden">
+      <section className="relative h-60 md:h-70 flex items-center justify-center overflow-hidden">
         {HERO_IMAGES.map((image, index) => (
           <div
             key={image}
@@ -133,10 +133,10 @@ export default function HomePage({ onNavigate, onSearchSubmit }: HomePageProps) 
         </div>
       </section>
 
-      <section className="py-12 bg-stone-50 border-b border-gray-200">
+      <section className="py-6 bg-stone-50 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-6">
-            <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">Cold Chain</h3>
+          <div className="mb-2">
+            <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2 text-center">Cold Chain</h3>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-7xl mx-auto">
               {PRODUCT_CATEGORIES.find((cat) => cat.type === 'drug')?.subcategories
                 ?.find((sub) => sub.id === 'antidiabetics')?.products.map((product) => (

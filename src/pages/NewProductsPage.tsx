@@ -110,7 +110,7 @@ export default function NewProductsPage({
             </div>
 
             {/* Subcategory Menu - This is your missing "types of drugs" list */}
-            {activeProductType !== 'medical-device' && (
+            {activeProductType !== 'medical-device' && activeProductType !== 'non-drug' && (
               <div className="mt-4 flex flex-wrap gap-2 items-center">
                 <button
                   onClick={() => setActiveSubcategory(null)}

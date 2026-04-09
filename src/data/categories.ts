@@ -79,6 +79,37 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
         ],
       },
       {
+        id: 'cough-cold-flu',
+        name: 'Cough, Cold and Flu',
+        image: 'https://images.unsplash.com/photo-1529386317747-0a2a51add902?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        products: [
+          { id: 'ccf-001', name: 'Cough Syrup DXM', price: '$11.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', discount: '18% OFF' },
+          { id: 'ccf-002', name: 'Oseltamivir (Tamiflu)', price: '$34.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isNew: true },
+          { id: 'ccf-003', name: 'Guaifenesin Expectorant', price: '$9.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+        ],
+      },
+      {
+        id: 'antilipidemics',
+        name: 'Antilipidemics (Cholesterol Management)',
+        image: 'https://images.unsplash.com/photo-1542884841-9f546e727bca?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        products: [
+          { id: 'al-001', name: 'Atorvastatin 20mg', price: '$19.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', discount: '15% OFF' },
+          { id: 'al-002', name: 'Simvastatin 40mg', price: '$17.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isNew: true },
+          { id: 'al-003', name: 'Rosuvastatin 10mg', price: '$21.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+        ],
+      },
+      {
+        id: 'pain-relievers',
+        name: 'Pain Relievers',
+        image: 'https://images.unsplash.com/photo-1602932213623-cc17e9541bb4?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        products: [
+          { id: 'pr-001', name: 'Ibuprofen 400mg', price: '$8.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+          { id: 'pr-002', name: 'Paracetamol 500mg', price: '$6.99', image: 'https://medecify.com/wp-content/uploads/2025/07/IMG-215-scaled.jpeg', discount: '20% OFF' },
+          { id: 'pr-003', name: 'Aspirin 100mg', price: '$7.99', image: 'https://vidafarmacias.com/6881-large_default/aspirin-protect-100-mg-box-with-28-delayed-release-tablets-acetylsalicylic-acid.jpg', isNew: true },
+          { id: 'pr-004', name: 'Diclofenac 50mg', price: '$11.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+        ],
+      },
+      {
         id: 'vitamins-supplements',
         name: 'Vitamins and Supplements',
         image: 'https://images.unsplash.com/photo-1622227922682-56c92e523e58?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -100,17 +131,7 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
           { id: 'am-003', name: 'Artesunate IV', price: '$32.99', image: 'https://5.imimg.com/data5/SELLER/Default/2022/7/ZL/YX/FN/50660068/whatsapp-image-2021-12-14-at-09-55-03-2-.jpeg', discount: '10% OFF' },
         ],
       },
-      {
-        id: 'pain-relievers',
-        name: 'Pain Relievers',
-        image: 'https://images.unsplash.com/photo-1602932213623-cc17e9541bb4?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        products: [
-          { id: 'pr-001', name: 'Ibuprofen 400mg', price: '$8.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-          { id: 'pr-002', name: 'Paracetamol 500mg', price: '$6.99', image: 'https://medecify.com/wp-content/uploads/2025/07/IMG-215-scaled.jpeg', discount: '20% OFF' },
-          { id: 'pr-003', name: 'Aspirin 100mg', price: '$7.99', image: 'https://vidafarmacias.com/6881-large_default/aspirin-protect-100-mg-box-with-28-delayed-release-tablets-acetylsalicylic-acid.jpg', isNew: true },
-          { id: 'pr-004', name: 'Diclofenac 50mg', price: '$11.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-        ],
-      },
+
       {
         id: 'anti-asthma',
         name: 'Anti-Asthma',
@@ -133,16 +154,6 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
         ],
       },
       {
-        id: 'cough-cold-flu',
-        name: 'Cough, Cold and Flu',
-        image: 'https://images.unsplash.com/photo-1529386317747-0a2a51add902?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        products: [
-          { id: 'ccf-001', name: 'Cough Syrup DXM', price: '$11.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', discount: '18% OFF' },
-          { id: 'ccf-002', name: 'Oseltamivir (Tamiflu)', price: '$34.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isNew: true },
-          { id: 'ccf-003', name: 'Guaifenesin Expectorant', price: '$9.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-        ],
-      },
-      {
         id: 'digestive-health',
         name: 'Digestive Health',
         image: 'https://images.unsplash.com/photo-1649073586104-2ac3fab175ea?q=80&w=737&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -153,16 +164,7 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
           { id: 'dh-004', name: 'Probiotics Complex', price: '$22.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
         ],
       },
-      {
-        id: 'antilipidemics',
-        name: 'Antilipidemics (Cholesterol Management)',
-        image: 'https://images.unsplash.com/photo-1542884841-9f546e727bca?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        products: [
-          { id: 'al-001', name: 'Atorvastatin 20mg', price: '$19.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', discount: '15% OFF' },
-          { id: 'al-002', name: 'Simvastatin 40mg', price: '$17.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isNew: true },
-          { id: 'al-003', name: 'Rosuvastatin 10mg', price: '$21.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-        ],
-      },
+
       {
         id: 'topicals',
         name: 'Topicals & Skincare',
@@ -190,18 +192,6 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     type: 'non-drug',
     label: 'Surgicals',
     subcategories: [
-      {
-        id: 'first-aid-surgical',
-        name: 'First Aid and Surgicals',
-        image: 'https://images.unsplash.com/photo-1600091474842-83bb9c05a723?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        products: [
-          { id: 'fas-001', name: 'Sterile Gauze Pads', price: '$5.99', image: 'https://cdn11.bigcommerce.com/s-1gtbylhith/images/stencil/1280x1280/products/31271/61814/hart-health-sterile-gauze-pads-4x4-non-stick__31953.1734371928.jpg?c=1', isNew: true },
-          { id: 'fas-002', name: 'Medical Bandages Assorted', price: '$8.99', image: 'https://www.tonuselast.com/cache/images/3196311920/elastic-medical-bandage-ribbon-compressive-high-stretch-100-mm_430649054.jpg', discount: '22% OFF' },
-          { id: 'fas-003', name: 'Surgical Gloves (100pcs)', price: '$12.99', image: 'https://images.unsplash.com/photo-1576091160399-1c84d68d6e87?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-          { id: 'fas-004', name: 'Elastic Compression Bandage', price: '$9.99', image: 'https://images.unsplash.com/photo-1576091160399-1c84d68d6e87?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-          { id: 'fas-005', name: 'Antiseptic Wipes Pack', price: '$6.99', image: 'https://images.unsplash.com/photo-1576091160399-1c84d68d6e87?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', discount: '15% OFF' },
-        ],
-      },
       {
         id: 'first-aid-surgical',
         name: 'First Aid and Surgicals',

@@ -17,7 +17,7 @@ const handleLinkClick = () => {
 
 const MAIN_CATEGORIES = [
   { id: 'drug', label: 'Drugs' },
-  { id: 'non-drug', label: 'Non-Drugs' },
+  { id: 'non-drug', label: 'Surgicals' },
   { id: 'medical-device', label: 'Medical Devices' },
 ];
 
