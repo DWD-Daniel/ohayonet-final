@@ -28,6 +28,26 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     label: 'Drugs',
     subcategories: [
       {
+        id: 'anti-pile',
+        name: 'Anti-pile',
+        image: 'https://images.unsplash.com/photo-1576091160399-1c84d68d6e87?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        products: [
+          { id: 'ap-001', name: 'Hemorrhoid Cream', price: '$14.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isNew: true },
+          { id: 'ap-002', name: 'Anti-pile Suppository', price: '$19.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', discount: '15% OFF' },
+          { id: 'ap-003', name: 'Pile Relief Tablets', price: '$22.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+        ],
+      },
+      {
+        id: 'blood-thinners',
+        name: 'Blood Thinners',
+        image: 'https://images.unsplash.com/photo-1615485276219-cbdf9309be1a?q=80&w=756&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        products: [
+          { id: 'bt-001', name: 'Aspirin 75mg', price: '$9.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', discount: '10% OFF' },
+          { id: 'bt-002', name: 'Warfarin 5mg', price: '$15.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+          { id: 'bt-003', name: 'Clopidogrel 75mg', price: '$18.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isNew: true },
+        ],
+      },
+      {
         id: 'vitamins-supplements',
         name: 'Vitamins and Supplements',
         image: 'https://images.unsplash.com/photo-1622227922682-56c92e523e58?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -62,7 +82,7 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
       },
       {
         id: 'anti-asthma',
-        name: 'Anti-asthma',
+        name: 'Anti-Asthma',
         image: 'https://images.unsplash.com/photo-1733751682743-8f46e457149e?q=80&w=781&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         products: [
           { id: 'aa-001', name: 'Ventolin Inhaler', price: '$28.99', image: 'https://hubnet.io/assets/medicine_images/medicine_231965060.jpg', isNew: true },
@@ -104,7 +124,7 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
       },
       {
         id: 'eye-ear-drops',
-        name: 'Eye and Ear Drops',
+        name: 'Eye Drops',
         image: 'https://images.unsplash.com/photo-1470162415307-7ed32bad0a5a?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         products: [
           { id: 'eed-001', name: 'Artificial Tears', price: '$8.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isNew: true },
@@ -114,7 +134,7 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
       },
       {
         id: 'antihypertensives',
-        name: 'Antihypertensives',
+        name: 'Anti-hypertensive',
         image: 'https://images.unsplash.com/photo-1615486511484-92e172cc4fe0?q=80&w=871&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         products: [
           { id: 'ah-001', name: 'Lisinopril 10mg', price: '$14.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
@@ -155,7 +175,7 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
       },
       {
         id: 'antidiabetics',
-        name: 'Antidiabetics',
+        name: 'Anti-diabetic',
         image: 'https://images.unsplash.com/photo-1685485276219-cbdf9309be1a?q=80&w=756&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         products: [
           { id: 'ad-001', name: 'Metformin 500mg', price: '$11.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
@@ -167,7 +187,7 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
   },
   {
     type: 'non-drug',
-    label: 'Non-Drugs',
+    label: 'Surgicals',
     subcategories: [
       {
         id: 'first-aid-surgical',
@@ -182,15 +202,15 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
         ],
       },
       {
-        id: 'skincare',
-        name: 'Skincare',
-        image: 'https://images.unsplash.com/photo-1573461160327-b450ce3d8e7f?q=80&w=465&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        id: 'first-aid-surgical',
+        name: 'First Aid and Surgicals',
+        image: 'https://images.unsplash.com/photo-1600091474842-83bb9c05a723?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         products: [
-          { id: 'sk-001', name: 'Moisturizing Lotion 200ml', price: '$14.99', image: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-          { id: 'sk-002', name: 'Facial Cleanser', price: '$11.99', image: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', discount: '20% OFF' },
-          { id: 'sk-003', name: 'Sunscreen SPF 50', price: '$18.99', image: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isNew: true },
-          { id: 'sk-004', name: 'Anti-aging Serum', price: '$24.99', image: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-          { id: 'sk-005', name: 'Lip Balm SPF 15', price: '$7.99', image: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', discount: '10% OFF' },
+          { id: 'fas-001', name: 'Sterile Gauze Pads', price: '$5.99', image: 'https://cdn11.bigcommerce.com/s-1gtbylhith/images/stencil/1280x1280/products/31271/61814/hart-health-sterile-gauze-pads-4x4-non-stick__31953.1734371928.jpg?c=1', isNew: true },
+          { id: 'fas-002', name: 'Medical Bandages Assorted', price: '$8.99', image: 'https://www.tonuselast.com/cache/images/3196311920/elastic-medical-bandage-ribbon-compressive-high-stretch-100-mm_430649054.jpg', discount: '22% OFF' },
+          { id: 'fas-003', name: 'Surgical Gloves (100pcs)', price: '$12.99', image: 'https://images.unsplash.com/photo-1576091160399-1c84d68d6e87?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+          { id: 'fas-004', name: 'Elastic Compression Bandage', price: '$9.99', image: 'https://images.unsplash.com/photo-1576091160399-1c84d68d6e87?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+          { id: 'fas-005', name: 'Antiseptic Wipes Pack', price: '$6.99', image: 'https://images.unsplash.com/photo-1576091160399-1c84d68d6e87?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', discount: '15% OFF' },
         ],
       },
     ],
