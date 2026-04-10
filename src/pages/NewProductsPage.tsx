@@ -8,6 +8,7 @@ import backgroundProduct from '../assets/product-bg.jpg'; // New background imag
 // Match this EXACTLY to what App.tsx passes
 interface NewProductsPageProps {
   initialProductType?: string;
+  initialSubcategory?: string;
   initialSearchQuery?: string;
   initialBuyId?: string | null;
   onSearchQueryUsed?: () => void;
@@ -15,6 +16,7 @@ interface NewProductsPageProps {
 
 export default function NewProductsPage({
   initialProductType = 'drug',
+  initialSubcategory,
   initialSearchQuery = '',
   initialBuyId = null,
   onSearchQueryUsed
@@ -33,6 +35,13 @@ export default function NewProductsPage({
       setActiveSubcategory(null);
     }
   }, [initialProductType]);
+
+  // Sync subcategory from navigation
+  useEffect(() => {
+    if (initialSubcategory) {
+      setActiveSubcategory(initialSubcategory);
+    }
+  }, [initialSubcategory]);
 
   // Sync search queries from the Navigation
   useEffect(() => {

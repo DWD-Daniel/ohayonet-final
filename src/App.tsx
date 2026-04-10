@@ -9,18 +9,23 @@ import { useState } from 'react';
 function App() {
   const navigate = useNavigate();
   const [selectedProductType, setSelectedProductType] = useState<string | undefined>(undefined);
+  const [selectedSubcategory, setSelectedSubcategory] = useState<string | undefined>(undefined);
   const [searchQuery, setSearchQuery] = useState('');
   const [buyProductId, setBuyProductId] = useState<string | null>(null);
 
   // UPDATED: Now uses actual URL navigation
-  const handleNavigate = (page: string, productType?: string, productId?: string) => {
+  const handleNavigate = (page: string, productType?: string, param?: string) => {
     if (productType) {
       const category = productType.split('?')[0];
       setSelectedProductType(category);
     }
     
-    if (productId) {
-      setBuyProductId(productId);
+    if (param && param !== buyProductId) {
+      setSelectedSubcategory(param);
+    }
+    
+    if (param?.startsWith('p-') || param?.startsWith('ad-') || param?.startsWith('ah-')) {
+      setBuyProductId(param);
     } else {
       setBuyProductId(null);
     }
@@ -53,6 +58,7 @@ function App() {
         <Route path="/products" element={
           <NewProductsPage
             initialProductType={selectedProductType}
+            initialSubcategory={selectedSubcategory}
             initialSearchQuery={searchQuery}
             initialBuyId={buyProductId}
             onSearchQueryUsed={() => setSearchQuery('')}

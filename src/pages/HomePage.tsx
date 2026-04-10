@@ -8,7 +8,7 @@ import mySectionBg from '../assets/pharmacy-interior.jpg';
 import { PRODUCT_CATEGORIES, getNewArrivals, getDiscountedProducts, Product } from '../data/categories';
 
 interface HomePageProps {
-  onNavigate: (page: string, productType?: string, productId?: string) => void;
+  onNavigate: (page: string, productType?: string, param?: string) => void;
   onSearchSubmit?: (query: string) => void;
 }
 
@@ -87,8 +87,8 @@ export default function HomePage({ onNavigate, onSearchSubmit }: HomePageProps) 
   const newArrivals = useMemo(() => getNewArrivals(), []);
   const discountedProducts = useMemo(() => getDiscountedProducts(), []);
 
-  const handleSubcategoryClick = () => {
-    onNavigate('products', activeTab);
+  const handleSubcategoryClick = (subcategoryId: string) => {
+    onNavigate('products', activeTab, subcategoryId);
   };
 
   return (
