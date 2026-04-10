@@ -82,15 +82,15 @@ export default function PaystackCheckout({ productName, productPrice, productId,
           </div>
           <div className="space-y-4">
             <p className="text-gray-600 text-center mb-6">Details saved. Choose how you'd like to pay:</p>
-            <button onClick={() => setShowPhoneNumber(!showPhoneNumber)} className="w-full bg-green-600 text-white py-4 rounded-lg font-semibold flex items-center justify-center gap-3">
+            <button onClick={() => setShowPhoneNumber(!showPhoneNumber)} className="w-full bg-blue-600 text-white py-4 rounded-lg font-semibold flex items-center justify-center gap-3">
               <Phone className="w-5 h-5" /> Call to Order
             </button>
             {showPhoneNumber && (
-              <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
-                <a href="tel:+23480160137474" className="text-green-600 text-xl font-bold">+234 80160137474</a>
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-center">
+                <a href="tel:+2348067470702" className="text-green-600 text-xl font-bold">+234 80160137474</a>
               </div>
             )}
-            <button onClick={() => window.open(`https://wa.me/2348067470702`, '_blank')} className="w-full bg-blue-600 text-white py-4 rounded-lg font-semibold flex items-center justify-center gap-3">
+            <button onClick={() => window.open(`https://wa.me/2348067470702`, '_blank')} className="w-full bg-green-600 text-white py-4 rounded-lg font-semibold flex items-center justify-center gap-3">
               <MessageCircle className="w-5 h-5" /> WhatsApp Order
             </button>
           </div>

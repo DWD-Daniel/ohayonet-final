@@ -29,7 +29,7 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     subcategories: [
       {
         id: 'antidiabetics',
-        name: 'Anti-diabetic',
+        name: 'Anti-diabetics',
         image: 'https://images.unsplash.com/photo-1685485276219-cbdf9309be1a?q=80&w=756&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         products: [
           { id: 'ad-001', name: 'Metformin 500mg', price: '$11.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },

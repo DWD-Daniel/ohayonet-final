@@ -25,13 +25,13 @@ const ProductCard = memo(({ product, onNavigate }: { product: Product; onNavigat
       className="h-40 bg-gray-200 bg-cover bg-center group-hover:scale-110 transition-transform duration-300"
       style={{ backgroundImage: `url(${product.image})` }}
     />
-    
+
     {/* 2. Content Section */}
     <div className="p-3">
       {/* Name and "New" Tag */}
       <div className="flex items-start justify-between mb-2">
         <h3 className="text-sm font-bold text-black flex-1">{product.name}</h3>
-{product.isNew && (
+        {product.isNew && (
           <span className="text-xs bg-blue-600 text-white px-2 py-1 rounded-full ml-2 flex-shrink-0">
             Limited
           </span>
@@ -60,7 +60,6 @@ const ProductCard = memo(({ product, onNavigate }: { product: Product; onNavigat
       {/* 3. The Redirect Button (Linked to Products Page) */}
       <div className="mt-3">
         <button
-          // CHANGED: Pass product.id as the distinct third argument
           onClick={() => onNavigate('products', undefined, product.id)}
           className="w-full bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1"
         >
@@ -98,9 +97,8 @@ export default function HomePage({ onNavigate, onSearchSubmit }: HomePageProps) 
         {HERO_IMAGES.map((image, index) => (
           <div
             key={image}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-              index === heroImageIndex ? 'opacity-100' : 'opacity-0'
-            }`}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === heroImageIndex ? 'opacity-100' : 'opacity-0'
+              }`}
             style={{
               backgroundImage: `url(${image})`,
               backgroundSize: 'cover',
@@ -151,11 +149,10 @@ export default function HomePage({ onNavigate, onSearchSubmit }: HomePageProps) 
                 <button
                   key={category.type}
                   onClick={() => setActiveTab(category.type as typeof activeTab)}
-                  className={`px-3 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-base font-semibold rounded-full transition-all ${
-                    activeTab === category.type
+                  className={`px-3 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-base font-semibold rounded-full transition-all ${activeTab === category.type
                       ? 'bg-red-600 text-white shadow-lg'
                       : 'bg-white text-black border-2 border-gray-200 hover:border-red-600'
-                  }`}
+                    }`}
                 >
                   {label}
                 </button>
@@ -168,16 +165,16 @@ export default function HomePage({ onNavigate, onSearchSubmit }: HomePageProps) 
         </div>
       </section>
 
-      <section 
-      className="relative py-16 bg-cover bg-center bg-no-repeat" 
-      style={{ 
-        // 2. Use the imported variable and add a slight dark tint so text stays readable
-        backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${mySectionBg})` 
-      }}
+      <section
+        className="relative py-12 bg-cover bg-center bg-no-repeat"
+        style={{
+          // 2. Use the imported variable and add a slight dark tint so text stays readable
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${mySectionBg})`
+        }}
       >
-        <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-white mb-8">Limited Deals</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-3xl font-bold text-white mb-4">Limited Deals</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             {newArrivals.map((product) => (
               <ProductCard key={product.id} product={product} onNavigate={onNavigate} />
             ))}
@@ -186,9 +183,9 @@ export default function HomePage({ onNavigate, onSearchSubmit }: HomePageProps) 
       </section>
 
       <section className="py-16 bg-stone-50">
-        <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-black mb-8">Best Sellers</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-3xl font-bold text-black mb-5">Best Sellers</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             {discountedProducts.map((product) => (
               <ProductCard key={product.id} product={product} onNavigate={onNavigate} />
             ))}
@@ -196,36 +193,36 @@ export default function HomePage({ onNavigate, onSearchSubmit }: HomePageProps) 
         </div>
       </section>
 
-     <footer className="bg-black text-white py-12">
-  <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center md:items-start space-y-8 md:space-y-0">
-    
-    {/* Left Side: Name & Address */}
-    <div className="text-center md:text-left">
-      <h3 className="font-semibold text-lg mb-2">Ohayonet Pharmacy</h3>
-      <p className="text-gray-400">123 Health Avenue, Medical District</p>
-      <p className="text-gray-400">City, State, ZIP Code</p>
-      <a 
-        href="mailto:ohayonetpharmacy@gmail.com" 
-        className="text-blue-400 hover:text-blue-300 transition-colors block mt-2"
-      >
-        ohayonetpharmacy@gmail.com
-      </a>
-    </div>
+      <footer className="bg-black text-white py-12">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center md:items-start space-y-8 md:space-y-0">
 
-    {/* Right Side: Legal & Copyright */}
-    <div className="text-center md:text-right flex flex-col items-center md:items-end">
-      <p className="text-gray-400">
-        &copy; 2026 Ohayonet Pharmacy. All rights reserved.
-      </p>
-      <div className="mt-2 space-x-4 text-sm text-gray-500">
-        <a href="#" className="hover:text-white transition-colors">Terms & Conditions</a>
-        <span>|</span>
-        <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-      </div>
-    </div>
+          {/* Left Side: Name & Address */}
+          <div className="text-center md:text-left">
+            <h3 className="font-semibold text-lg mb-2">Ohayonet Pharmacy</h3>
+            <p className="text-gray-400">123 Health Avenue, Medical District</p>
+            <p className="text-gray-400">City, State, ZIP Code</p>
+            <a
+              href="mailto:ohayonetpharmacy@gmail.com"
+              className="text-blue-400 hover:text-blue-300 transition-colors block mt-2"
+            >
+              ohayonetpharmacy@gmail.com
+            </a>
+          </div>
 
-  </div>
-</footer>
+          {/* Right Side: Legal & Copyright */}
+          <div className="text-center md:text-right flex flex-col items-center md:items-end">
+            <p className="text-gray-400">
+              &copy; 2026 Ohayonet Pharmacy. All rights reserved.
+            </p>
+            <div className="mt-2 space-x-4 text-sm text-gray-500">
+              <a href="#" className="hover:text-white transition-colors">Terms & Conditions</a>
+              <span>|</span>
+              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+            </div>
+          </div>
+
+        </div>
+      </footer>
     </div>
   );
 }

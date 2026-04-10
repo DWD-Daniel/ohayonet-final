@@ -47,7 +47,7 @@ export default function CartPage() {
   }, 0);
 
   // phone for call and whatsapp
-  const PHONE = '+234800000000';
+  const PHONE = '+2348067470702';
   const waLink = `https://wa.me/${PHONE.replace(/\+/g, '')}?text=${encodeURIComponent(
     'Hi, I would like to order the following items from my cart.'
   )}`;
@@ -113,7 +113,7 @@ export default function CartPage() {
             <div className="flex flex-col md:flex-row md:justify-end gap-4">
               <a
                 href={`tel:${PHONE}`}
-                className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg text-center"
+                className="bg-blue-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg text-center"
               >
                 Call to Order
               </a>
@@ -121,7 +121,7 @@ export default function CartPage() {
                 href={waLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg text-center"
+                className="bg-green-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg text-center"
               >
                 Chat to Order
               </a>
