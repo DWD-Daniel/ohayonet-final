@@ -43,8 +43,8 @@ const ProductCard = memo(({ product, onNavigate }: { product: Product; onNavigat
         <div className="space-y-1">
           {product.discount ? (
             <>
-              <div className="flex items-center gap-2">
-                <span className="text-xs line-through text-gray-500">{'$' + (parseFloat(product.price.slice(1)) * 1.25).toFixed(2)}</span>
+                <div className="flex items-center gap-2">
+                <span className="text-xs line-through text-gray-500">{`₦${(parseFloat(product.price.slice(1).replace(/,/g, '')) * 1.25).toLocaleString('en-NG')}`}</span>
                 <span className="text-sm font-bold text-red-600">{product.price}</span>
               </div>
               <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded-full">
