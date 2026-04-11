@@ -1,3 +1,25 @@
+import Alphagan from '../assets/images/Alphagan5ml.webp';
+import Atacand from '../assets/images/atacand16mg.png';
+import Atacandplus from '../assets/images/atacandplus.png';
+import Betmiga50 from '../assets/images/betmiga50mg.png';
+import Casodex from '../assets/images/casodex50mg.png';
+import Daflon500mg from '../assets/images/daflon500mg.png';
+import Diamicron6060 from '../assets/images/diamicron60mg60.png';
+import Diamicron60 from '../assets/images/diamicron60mg.png';
+import Forziga10 from '../assets/images/forziga10mg.jpg';
+import Exforge from '../assets/images/exforge10-160mg.webp';
+import Galvusmet from '../assets/images/galvusmet50mg.png';
+import Ganfort from '../assets/images/Ganfort3ml.png'; 
+import infacol from '../assets/images/infacol.png'; 
+import Jardiance10 from '../assets/images/jardiance10mg.png';
+import Lumigan from '../assets/images/Lumigan2-5.png';
+import Xarelto10 from '../assets/images/xarelto10mg.webp';
+import Xarelto15 from '../assets/images/xarelto15mg.webp';
+import Xarelto20 from '../assets/images/xarelto20mg.webp';
+import vesicare from '../assets/images/vesicare5mg.png';
+import vastarel from '../assets/images/Vastarel35mg.png';
+import triplixam from '../assets/images/Triplixam10-25-10.png';
+
 export type ProductType = 'drug' | 'non-drug' | 'medical-device';
 
 export interface ProductSubcategory {
@@ -32,9 +54,10 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
         name: 'Anti-diabetics',
         image: 'https://images.unsplash.com/photo-1685485276219-cbdf9309be1a?q=80&w=756&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         products: [
-          { id: 'ad-001', name: 'Metformin 500mg', price: '$11.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-          { id: 'ad-002', name: 'Glibenclamide 5mg', price: '$13.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', discount: '18% OFF' },
-          { id: 'ad-003', name: 'Insulin Glargine', price: '$45.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isNew: true },
+          { id: 'ad-001', name: 'Diamicron 60mg 60tabs', price: '$11.99', image: Diamicron6060 },
+          { id: 'ad-002', name: 'Diamicron 60mg 30tabs', price: '$13.99', image: Diamicron60, discount: '18% OFF' },
+          { id: 'ad-003', name: 'Forziga 10mg', price: '$45.99', image: Forziga10, isNew: true },
+          { id: 'ad-004', name: 'Jardiance 10mg', price: '$39.99', image: Jardiance10 },
         ],
       },
       {
