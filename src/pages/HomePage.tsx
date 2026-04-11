@@ -136,12 +136,28 @@ export default function HomePage({ onNavigate, onSearchSubmit }: HomePageProps) 
           <div className="mb-2">
             <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2 text-center">Cold Chain</h3>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-7xl mx-auto">
-              {PRODUCT_CATEGORIES.find((cat) => cat.type === 'drug')?.subcategories
-                ?.find((sub) => sub.id === 'antidiabetics')?.products.map((product, index) => (
+              {(() => {
+                // 1. Get your standard Cold Chain list
+                const coldChainProducts = PRODUCT_CATEGORIES.find((cat) => cat.type === 'drug')
+                  ?.subcategories?.find((sub) => sub.id === 'antidiabetics')?.products || [];
+
+                // 2. Find the "Exception" product from a different category (e.g., Glaucoma)
+                const exceptionProduct = PRODUCT_CATEGORIES.find((cat) => cat.type === 'drug')
+                  ?.subcategories?.find((sub) => sub.id === 'cough-cold-flu')
+                  ?.products.find((p) => p.id === 'ccf-001'); // Use the specific ID of the item you want
+
+                // 3. Combine them: Exception first, then the rest
+                // We filter the coldChainProducts to make sure the exception isn't accidentally duplicated
+                const finalDisplayList = exceptionProduct
+                  ? [exceptionProduct, ...coldChainProducts.filter(p => p.id !== exceptionProduct.id)]
+                  : coldChainProducts;
+
+                return finalDisplayList.map((product, index) => (
                   <div key={product.id} className={index >= 4 ? 'hidden md:block' : 'block'}>
                     <ProductCard product={product} onNavigate={onNavigate} />
                   </div>
-                )) || []}
+                ));
+              })()}
             </div>
           </div>
           <div className="flex gap-4 mb-8 justify-center">

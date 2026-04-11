@@ -9,8 +9,8 @@ import Diamicron60 from '../assets/diamicron60mg.jpg';
 import Forziga10 from '../assets/forziga10mg.jpg';
 import Exforge from '../assets/exforge10-160mg.webp';
 import Galvusmet from '../assets/galvusmet50mg.png';
-import Ganfort from '../assets/ganfort3ml.png'; 
-import infacol from '../assets/infacol.png'; 
+import Ganfort from '../assets/ganfort3ml.png';
+import infacol from '../assets/infacol.png';
 import Jardiance10 from '../assets/jardiance10mg.png';
 import novomix from '../assets/novomix.png';
 import Lumigan from '../assets/lumigan2-5.png';
@@ -57,8 +57,8 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
         name: 'Anti-diabetics',
         image: 'https://images.unsplash.com/photo-1685485276219-cbdf9309be1a?q=80&w=756&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         products: [
-{ id: 'ad-001', name: 'Diamicron 60mg 60tabs', price: '₦11.99', image: Diamicron6060 },
-          { id: 'ad-002', name: 'Diamicron 60mg 30tabs', price: '₦13.99', image: Diamicron60, discount: '18% OFF' },
+          { id: 'ad-001', name: 'Diamicron 60mg 30tabs', price: '₦11.99', image: Diamicron60 },
+          { id: 'ad-002', name: 'Diamicron 60mg 60tabs', price: '₦13.99', image: Diamicron6060, discount: '18% OFF' },
           { id: 'ad-003', name: 'Forziga 10mg', price: '₦45.99', image: Forziga10, isNew: true },
           { id: 'ad-004', name: 'Jardiance 10mg', price: '₦39.99', image: Jardiance10 },
           { id: 'ad-005', name: 'Novomix Flexpen', price: '₦65.99', image: novomix },
