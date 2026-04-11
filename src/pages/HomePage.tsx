@@ -123,9 +123,9 @@ export default function HomePage({ onNavigate, onSearchSubmit }: HomePageProps) 
 
           <button
             onClick={() => onNavigate('products', 'drug')}
-            className="bg-red-600 hover:bg-red-700 text-white px-6 py-1 md:px-8 md:py-3 text-sm md:text-base rounded-full font-semibold transition-all hover:scale-105 inline-flex items-center gap-2"
+            className="bg-red-600 hover:bg-red-700 text-white px-6 py-1 md:px-8 md:py-3 text-base md:text-lg rounded-full font-semibold transition-all hover:scale-105 inline-flex items-center gap-2"
           >
-            Shop Now
+            See All Products
             <ArrowRight className="w-5 h-8" />
           </button>
         </div>

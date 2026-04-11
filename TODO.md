@@ -5,6 +5,7 @@
 3. ✅ Add/update products in existing subcategories
 4. ✅ Add new subcategories (OAB, Immunodepressants, Anti-Androgen, Cold Chain Anti-Diabetic)
 5. ✅ Verify imports preserved/added alphabetically if needed
-6. [ ] Test app
-7. [ ] Complete task
+6. [ ] Update prices to NGN (feedback)
+7. [ ] Test app
+8. [ ] Complete task
 

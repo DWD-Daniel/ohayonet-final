@@ -95,9 +95,9 @@ export default function NewProductsPage({
       {/* Category & Subcategory Menus (Hidden if buying a specific item) */}
       {!initialBuyId && (
         <div className="bg-stone-50 border-b border-gray-200 sticky top-16 z-40">
-          <div className="max-w-7xl mx-auto px-6 py-4">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0">
+          <div className="max-w-7xl mx-auto px-6 py-1 md:py-4">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
+              <div className="flex gap-2 overflow-x-auto pb-1 md:pb-0">
                 {PRODUCT_CATEGORIES.map((category) => (
                   <button
                     key={category.type}
@@ -106,7 +106,7 @@ export default function NewProductsPage({
                       setActiveSubcategory(null);
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
-                    className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${activeProductType === category.type ? 'bg-red-600 text-white' : 'bg-white border text-gray-600'
+                    className={`px-3 py-2 md:px-4 md:py-2 text-sm rounded-full font-semibold transition-colors ${activeProductType === category.type ? 'bg-red-600 text-white' : 'bg-white border text-gray-600'
                       }`}
                   >
                     {category.label}
