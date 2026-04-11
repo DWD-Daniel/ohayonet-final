@@ -1,11 +1,8 @@
-# Task: Update categories.ts with new drugs
+# TODO: Update Drug Prices Task
 
-1. ✅ Plan approved
-2. [ ] Create TODO.md (current)
-3. ✅ Add/update products in existing subcategories
-4. ✅ Add new subcategories (OAB, Immunodepressants, Anti-Androgen, Cold Chain Anti-Diabetic)
-5. ✅ Verify imports preserved/added alphabetically if needed
-6. [ ] Update prices to NGN (feedback)
-7. [ ] Test app
-8. [ ] Complete task
+## Steps:
+- [ ] 1. Create TODO.md with this plan breakdown (done)
+- [x] 2. Perform all 24 price updates in src/data/categories.ts using edit_file
+- [x] 3. Verify changes with read_file on src/data/categories.ts
+- [ ] 4. Attempt completion with demo command (npm run dev)
 
