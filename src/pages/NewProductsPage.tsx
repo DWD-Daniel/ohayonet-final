@@ -122,7 +122,9 @@ export default function NewProductsPage({
             {activeProductType !== 'medical-device' && activeProductType !== 'non-drug' && (
               <div className="mt-4 flex flex-wrap gap-2 items-center">
                 <button
-                  onClick={() => setActiveSubcategory(null)}
+                  onClick={() => {
+                    setActiveSubcategory(null);
+                  }}
                   className={`px-3 py-1.5 rounded-lg text-xs font-medium ${!activeSubcategory ? 'bg-black text-white' : 'bg-gray-100'}`}
                 >
                   All {activeCategory?.label}
@@ -132,6 +134,7 @@ export default function NewProductsPage({
                     key={sub.id}
                     onClick={() => {
                       setActiveSubcategory(sub.id);
+                      setShowAllSubcategories(false);
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
                     className={`${idx > 5 && !showAllSubcategories ? 'hidden md:block' : ''} px-3 py-1.5 rounded-lg text-xs font-medium ${activeSubcategory === sub.id ? 'bg-black text-white' : 'bg-gray-100'}`}
