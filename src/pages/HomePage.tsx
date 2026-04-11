@@ -93,7 +93,7 @@ export default function HomePage({ onNavigate, onSearchSubmit }: HomePageProps) 
 
   return (
     <div className="pt-16 min-h-screen bg-white">
-      <section className="relative h-60 md:h-70 flex items-center justify-center overflow-hidden">
+      <section className="relative h-70 md:h-70 flex items-center justify-center overflow-hidden">
         {HERO_IMAGES.map((image, index) => (
           <div
             key={image}
@@ -117,28 +117,30 @@ export default function HomePage({ onNavigate, onSearchSubmit }: HomePageProps) 
             Your trusted source for one-of-a-kind pharmaceuticals and health products
           </p>
 
-          <div className="md:hidden mb-6">
+          <div className="md:hidden mb-4">
             <SearchBar onSubmit={onSearchSubmit} placeholder="Search products..." />
           </div>
 
           <button
             onClick={() => onNavigate('products', 'drug')}
-            className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 md:px-8 md:py-3 text-sm md:text-base rounded-full font-semibold transition-all hover:scale-105 inline-flex items-center gap-2"
+            className="bg-red-600 hover:bg-red-700 text-white px-6 py-1 md:px-8 md:py-3 text-sm md:text-base rounded-full font-semibold transition-all hover:scale-105 inline-flex items-center gap-2"
           >
             Shop Now
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="w-5 h-8" />
           </button>
         </div>
       </section>
 
-      <section className="py-6 bg-stone-50 border-b border-gray-200">
+      <section className="pt-6 md:pt-6 pb-6 bg-stone-50 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-2">
             <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2 text-center">Cold Chain</h3>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-7xl mx-auto">
               {PRODUCT_CATEGORIES.find((cat) => cat.type === 'drug')?.subcategories
-                ?.find((sub) => sub.id === 'antidiabetics')?.products.map((product) => (
-                  <ProductCard key={product.id} product={product} onNavigate={onNavigate} />
+                ?.find((sub) => sub.id === 'antidiabetics')?.products.map((product, index) => (
+                  <div key={product.id} className={index >= 4 ? 'hidden md:block' : 'block'}>
+                    <ProductCard product={product} onNavigate={onNavigate} />
+                  </div>
                 )) || []}
             </div>
           </div>
@@ -150,8 +152,8 @@ export default function HomePage({ onNavigate, onSearchSubmit }: HomePageProps) 
                   key={category.type}
                   onClick={() => setActiveTab(category.type as typeof activeTab)}
                   className={`px-3 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-base font-semibold rounded-full transition-all ${activeTab === category.type
-                      ? 'bg-red-600 text-white shadow-lg'
-                      : 'bg-white text-black border-2 border-gray-200 hover:border-red-600'
+                    ? 'bg-red-600 text-white shadow-lg'
+                    : 'bg-white text-black border-2 border-gray-200 hover:border-red-600'
                     }`}
                 >
                   {label}

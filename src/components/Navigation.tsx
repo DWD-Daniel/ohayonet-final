@@ -151,7 +151,7 @@ export default function Navigation({ onNavigate, onSearchSubmit }: NavigationPro
                 handleLinkClick();
                 setMobileMenuOpen(false);
               }}
-              className={`block w-full text-left px-4 py-2 text-sm font-medium transition-colors ${isActive('home') ? 'text-red-600' : 'text-black hover:text-red-600'
+              className={`block w-full text-left px-4 py-1 text-lg font-medium transition-colors ${isActive('home') ? 'text-red-600' : 'text-black hover:text-red-600'
                 }`}
             >
               Home
@@ -160,7 +160,7 @@ export default function Navigation({ onNavigate, onSearchSubmit }: NavigationPro
             <div className="border-t border-gray-200 mt-2 pt-2">
               <button
                 onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
-                className={`block w-full text-left px-4 py-2 text-sm font-medium transition-colors flex items-center justify-between ${isActive('products') ? 'text-red-600' : 'text-black hover:text-red-600'
+                className={`block w-full text-left px-4 py-1 text-lg font-medium transition-colors flex items-center justify-between ${isActive('products') ? 'text-red-600' : 'text-black hover:text-red-600'
                   }`}
               >
                 Products
@@ -179,7 +179,7 @@ export default function Navigation({ onNavigate, onSearchSubmit }: NavigationPro
                         handleLinkClick();
                         handleProductTypeClick(cat.id);
                       }}
-                      className="block w-full text-left px-8 py-2 text-sm text-black hover:text-red-600 hover:bg-red-50 transition-colors"
+                      className="block w-full text-left px-8 py-1 text-lg text-black hover:text-red-600 hover:bg-red-50 transition-colors"
                     >
                       {cat.label}
                     </button>
@@ -195,7 +195,7 @@ export default function Navigation({ onNavigate, onSearchSubmit }: NavigationPro
                 setMobileMenuOpen(false);
 
               }}
-              className={`block w-full text-left px-4 py-2 text-sm font-medium transition-colors border-t border-gray-200 mt-2 pt-2 ${isActive('contact') ? 'text-red-600' : 'text-black hover:text-red-600'
+              className={`block w-full text-left px-4 py-1 text-lg font-medium transition-colors border-t border-gray-200 mt-2 pt-2 ${isActive('contact') ? 'text-red-600' : 'text-black hover:text-red-600'
                 }`}
             >
               Contact
@@ -207,7 +207,7 @@ export default function Navigation({ onNavigate, onSearchSubmit }: NavigationPro
                 handleLinkClick();
                 setMobileMenuOpen(false);
               }}
-              className={`block w-full text-left px-4 py-2 text-sm font-medium transition-colors border-t border-gray-200 mt-2 pt-2 ${isActive('cart') ? 'text-red-600' : 'text-black hover:text-red-600'
+              className={`block w-full text-left px-4 py-1 text-lg font-medium transition-colors border-t border-gray-200 mt-2 pt-2 ${isActive('cart') ? 'text-red-600' : 'text-black hover:text-red-600'
                 }`}
             >
               Cart
