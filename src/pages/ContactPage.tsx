@@ -42,7 +42,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-black mb-1">Phone</h3>
-                    <p className="text-gray-600">+234 816 013 7474</p>
+                    <p className="text-gray-600">+234 80 6747 0702</p>
                     <p className="text-gray-600">Mon-Fri, 8am-6pm WAT</p>
                   </div>
                 </div>
@@ -63,8 +63,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-black mb-1">Address</h3>
-                    <p className="text-gray-600">Aiye Bus Stop, 21 Osolo Wy, Isolo</p>
-                    <p className="text-gray-600">Lagos 102214, Lagos</p>
+                    <p className="text-gray-600">10 Orusu Street, Idumota</p>
+                    <p className="text-gray-600">Lagos Island 101223, Lagos</p>
                   </div>
                 </div>
               </div>

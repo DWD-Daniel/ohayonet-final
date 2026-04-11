@@ -217,8 +217,8 @@ export default function HomePage({ onNavigate, onSearchSubmit }: HomePageProps) 
           {/* Left Side: Name & Address */}
           <div className="text-center md:text-left">
             <h3 className="font-semibold text-lg mb-2">Ohayonet Pharmacy</h3>
-            <p className="text-gray-400">123 Health Avenue, Medical District</p>
-            <p className="text-gray-400">City, State, ZIP Code</p>
+            <p className="text-gray-400">10 Orusu Street, Idumota</p>
+            <p className="text-gray-400">Lagos Island, Lagos, 101223</p>
             <a
               href="mailto:ohayonetpharmacy@gmail.com"
               className="text-blue-400 hover:text-blue-300 transition-colors block mt-2"
