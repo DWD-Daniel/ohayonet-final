@@ -1,10 +1,10 @@
-# Task: Link product cards in homepage carousel to NewProductsPage subcategories
+# Task: Update categories.ts with new drugs
 
-## Steps:
-- [x] 1. Create TODO.md with plan breakdown
-- [x] 2. Edit src/pages/HomePage.tsx: Update handleSubcategoryClick signature and call to pass subcategoryId as third arg to onNavigate('products', activeTab, subcategoryId)
-- [x] 3. Edit src/pages/NewProductsPage.tsx: Add initialSubcategory?: string prop, useEffect to setActiveSubcategory(initialSubcategory)
-- [x] 4. Update TODO.md mark complete
-- [x] 5. Test: npm run dev, click carousel cards, verify navigation and filtering
-- [ ] 6. attempt_completion
+1. ✅ Plan approved
+2. [ ] Create TODO.md (current)
+3. ✅ Add/update products in existing subcategories
+4. ✅ Add new subcategories (OAB, Immunodepressants, Anti-Androgen, Cold Chain Anti-Diabetic)
+5. ✅ Verify imports preserved/added alphabetically if needed
+6. [ ] Test app
+7. [ ] Complete task
 

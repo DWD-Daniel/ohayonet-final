@@ -12,6 +12,7 @@ import Galvusmet from '../assets/images/galvusmet50mg.png';
 import Ganfort from '../assets/images/Ganfort3ml.png'; 
 import infacol from '../assets/images/infacol.png'; 
 import Jardiance10 from '../assets/images/jardiance10mg.png';
+import novomix from '../assets/images/novomix.png';
 import Lumigan from '../assets/images/Lumigan2-5.png';
 import Xarelto10 from '../assets/images/xarelto10mg.webp';
 import Xarelto15 from '../assets/images/xarelto15mg.webp';
@@ -19,6 +20,8 @@ import Xarelto20 from '../assets/images/xarelto20mg.webp';
 import vesicare from '../assets/images/vesicare5mg.png';
 import vastarel from '../assets/images/Vastarel35mg.png';
 import triplixam from '../assets/images/Triplixam10-25-10.png';
+import Prograf from '../assets/images/prograf.png';
+import ventolin from '../assets/images/ventolin.png';
 
 export type ProductType = 'drug' | 'non-drug' | 'medical-device';
 
@@ -54,10 +57,12 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
         name: 'Anti-diabetics',
         image: 'https://images.unsplash.com/photo-1685485276219-cbdf9309be1a?q=80&w=756&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         products: [
-          { id: 'ad-001', name: 'Diamicron 60mg 60tabs', price: '$11.99', image: Diamicron6060 },
+{ id: 'ad-001', name: 'Diamicron 60mg 60tabs', price: '$11.99', image: Diamicron6060 },
           { id: 'ad-002', name: 'Diamicron 60mg 30tabs', price: '$13.99', image: Diamicron60, discount: '18% OFF' },
           { id: 'ad-003', name: 'Forziga 10mg', price: '$45.99', image: Forziga10, isNew: true },
           { id: 'ad-004', name: 'Jardiance 10mg', price: '$39.99', image: Jardiance10 },
+          { id: 'ad-005', name: 'Novomix Flexpen', price: '$65.99', image: novomix },
+          { id: 'ad-006', name: 'Galvus Met', price: '$42.99', image: Galvusmet, discount: '10% OFF' },
         ],
       },
       {
@@ -69,6 +74,11 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
           { id: 'ah-002', name: 'Metoprolol 50mg', price: '$16.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', discount: '12% OFF' },
           { id: 'ah-003', name: 'Amlodipine 5mg', price: '$18.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isNew: true },
           { id: 'ah-004', name: 'Losartan 100mg', price: '$21.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+          { id: 'ah-005', name: 'Triplixam', price: '$38.99', image: triplixam },
+          { id: 'ah-006', name: 'Vastarel', price: '$29.99', image: vastarel },
+          { id: 'ah-007', name: 'Exforge', price: '$44.99', image: Exforge, isNew: true },
+          { id: 'ah-008', name: 'Atacand', price: '$36.99', image: Atacand },
+          { id: 'ah-009', name: 'Atacand Plus', price: '$41.99', image: Atacandplus, discount: '8% OFF' },
         ],
       },
       {
@@ -79,6 +89,11 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
           { id: 'eed-001', name: 'Artificial Tears', price: '$8.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isNew: true },
           { id: 'eed-002', name: 'Antibiotic Eye Drops', price: '$12.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
           { id: 'eed-003', name: 'Antibiotic Ear Drops', price: '$11.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', discount: '10% OFF' },
+          { id: 'eed-004', name: 'Ganfort', price: '$35.99', image: Ganfort },
+          { id: 'eed-005', name: 'Lumigan', price: '$42.99', image: Lumigan },
+          { id: 'eed-006', name: 'Alphagan', price: '$28.99', image: Alphagan, isNew: true },
+          { id: 'eed-007', name: 'Xalatan', price: '$31.99', image: 'https://images.unsplash.com/photo-1470162415307-7ed32bad0a5a?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+          { id: 'eed-008', name: 'Xalacom', price: '$38.99', image: 'https://images.unsplash.com/photo-1470162415307-7ed32bad0a5a?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', discount: '5% OFF' },
         ],
       },
       {
@@ -89,6 +104,7 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
           { id: 'ap-001', name: 'Hemorrhoid Cream', price: '$14.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isNew: true },
           { id: 'ap-002', name: 'Anti-pile Suppository', price: '$19.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', discount: '15% OFF' },
           { id: 'ap-003', name: 'Pile Relief Tablets', price: '$22.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+          { id: 'ap-004', name: 'Daflon', price: '$26.99', image: Daflon500mg },
         ],
       },
       {
@@ -99,6 +115,9 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
           { id: 'bt-001', name: 'Aspirin 75mg', price: '$9.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', discount: '10% OFF' },
           { id: 'bt-002', name: 'Warfarin 5mg', price: '$15.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
           { id: 'bt-003', name: 'Clopidogrel 75mg', price: '$18.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isNew: true },
+          { id: 'bt-004', name: 'Xarelto 10mg', price: '$32.99', image: Xarelto10 },
+          { id: 'bt-005', name: 'Xarelto 15mg', price: '$35.99', image: Xarelto15 },
+          { id: 'bt-006', name: 'Xarelto 20mg', price: '$38.99', image: Xarelto20, discount: '12% OFF' },
         ],
       },
       {
@@ -106,7 +125,7 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
         name: 'Cough, Cold and Flu',
         image: 'https://images.unsplash.com/photo-1529386317747-0a2a51add902?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         products: [
-          { id: 'ccf-001', name: 'Cough Syrup DXM', price: '$11.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', discount: '18% OFF' },
+          { id: 'ccf-001', name: 'Infacol Colic Relief', price: '$11.99', image: infacol, discount: '18% OFF' },
           { id: 'ccf-002', name: 'Oseltamivir (Tamiflu)', price: '$34.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isNew: true },
           { id: 'ccf-003', name: 'Guaifenesin Expectorant', price: '$9.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
         ],
@@ -160,7 +179,7 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
         name: 'Anti-Asthma',
         image: 'https://images.unsplash.com/photo-1733751682743-8f46e457149e?q=80&w=781&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         products: [
-          { id: 'aa-001', name: 'Ventolin Inhaler', price: '$28.99', image: 'https://hubnet.io/assets/medicine_images/medicine_231965060.jpg', isNew: true },
+          { id: 'aa-001', name: 'Ventolin 2.5mg', price: '$28.99', image: ventolin, isNew: true },
           { id: 'aa-002', name: 'Fluticasone Diskus', price: '$42.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
           { id: 'aa-003', name: 'Montelukast Tablet', price: '$19.99', image: 'https://hubpharmafrica.com/wp-content/uploads/2024/12/MONTELUKAST-10MG-TABLET.jpeg', discount: '12% OFF' },
         ],
@@ -208,9 +227,44 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
           { id: 'af-003', name: 'Miconazole Powder', price: '$9.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isNew: true },
         ],
       },
-
+      {
+        id: 'oab',
+        name: 'OAB',
+        image: 'https://images.unsplash.com/photo-1615485276219-cbdf9309be1a?q=80&w=756&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        products: [
+          { id: 'oab-001', name: 'Betmiga', price: '$48.99', image: Betmiga50, isNew: true },
+          { id: 'oab-002', name: 'Vesicare', price: '$34.99', image: vesicare, discount: '10% OFF' },
+        ],
+      },
+      {
+        id: 'immunodepressants',
+        name: 'Immunodepressants',
+        image: 'https://images.unsplash.com/photo-1615485276219-cbdf9309be1a?q=80&w=756&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        products: [
+          { id: 'imm-001', name: 'Prograf', price: '$120.99', image: Prograf },
+        ],
+      },
+      {
+        id: 'anti-androgen',
+        name: 'Anti-Androgen (Prostate Cancer)',
+        image: 'https://images.unsplash.com/photo-1615485276219-cbdf9309be1a?q=80&w=756&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        products: [
+          { id: 'aa-001', name: 'Casodex', price: '$85.99', image: Casodex, discount: '5% OFF' },
+        ],
+      },
+      {
+        id: 'cold-chain-antidiabetic',
+        name: 'Cold Chain - Anti-Diabetic',
+        image: 'https://images.unsplash.com/photo-1685485276219-cbdf9309be1a?q=80&w=756&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        products: [
+          { id: 'cca-001', name: 'Novorapid', price: '$75.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isNew: true },
+          { id: 'cca-002', name: 'Apidra', price: '$72.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+          { id: 'cca-003', name: 'Lantus', price: '$80.99', image: 'https://images.unsplash.com/photo-1631549916768-4c192d749b23?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', discount: '8% OFF' },
+        ],
+      },
     ],
   },
+
   {
     type: 'non-drug',
     label: 'Surgicals',
