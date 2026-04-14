@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import SearchBar from '../components/SearchBar';
-import PaystackCheckout from '../components/PaystackCheckout';
+import { ShoppingCart } from 'lucide-react';
 import { PRODUCT_CATEGORIES, Product, ProductType } from '../data/categories';
 import { ChevronDown } from 'lucide-react';
 import backgroundProduct from '../assets/product-bg.jpg'; // New background image for the products page
@@ -12,6 +12,7 @@ interface NewProductsPageProps {
   initialSearchQuery?: string;
   initialBuyId?: string | null;
   onSearchQueryUsed?: () => void;
+  onNavigate?: (page: string, productType?: string, param?: string) => void;
 }
 
 export default function NewProductsPage({
@@ -19,7 +20,8 @@ export default function NewProductsPage({
   initialSubcategory,
   initialSearchQuery = '',
   initialBuyId = null,
-  onSearchQueryUsed
+  onSearchQueryUsed,
+  onNavigate
 }: NewProductsPageProps) {
 
   const [activeProductType, setActiveProductType] = useState<ProductType>(initialProductType as ProductType);
@@ -177,43 +179,30 @@ export default function NewProductsPage({
                 <h3 className="text-sm font-bold text-black mb-3 h-10 line-clamp-2">{product.name}</h3>
                 <div className="flex flex-col sm:flex-row items-center justify-between">
                   <span className="text-lg font-bold text-red-600">{product.price}</span>
-                  <div className="flex flex-col sm:flex-row items-center gap-2 mt-2 sm:mt-0">
-                    <PaystackCheckout
-                      productName={product.name}
-                      productPrice={product.price}
-                      productId={product.id}
-                      autoOpen={initialBuyId === product.id} // Auto-opens modal if clicked from home
-                    />
+                  <div className="flex flex-col sm:flex-row items-center gap-2 mt-2 sm:mt-0 w-full">
                     <button
-                      onClick={() => {
-                        const existing = localStorage.getItem('cart');
-                        let cart: Array<any> = existing ? JSON.parse(existing) : [];
-                        const idx = cart.findIndex((item: any) => item.id === product.id);
-                        if (idx > -1) {
-                          cart[idx].quantity += 1;
-                        } else {
-                          cart.push({
-                            id: product.id,
-                            name: product.name,
-                            price: product.price,
-                            image: product.image,
-                            quantity: 1,
-                          });
-                        }
-                        localStorage.setItem('cart', JSON.stringify(cart));
-                        alert(`${product.name} added to cart`);
-                      }}
-                      className="px-3 py-1.5 bg-blue-600 text-white rounded-lg text-xs hover:bg-blue-700 transition"
+                      onClick={() => onNavigate!('product', undefined, product.id)}
+                      className="flex-1 bg-red-600 text-white py-2 rounded-lg text-xs font-semibold hover:bg-red-700 transition flex items-center justify-center gap-1"
                     >
+                      <ShoppingCart className="w-3 h-3" />
+                      Buy Now
+                    </button>
+                    <button
+                      onClick={() => onNavigate!('product', undefined, product.id)}
+                      className="flex-1 bg-blue-600 text-white py-2 rounded-lg text-xs font-semibold hover:bg-blue-700 transition flex items-center justify-center gap-1"
+                    >
+                      <ShoppingCart className="w-3 h-3" />
                       Add to Cart
                     </button>
                   </div>
                 </div>
               </div>
-            ))}
+            )
+            )}
           </div>
         </div>
       </section>
-    </div >
+    </div>
+
   );
 }

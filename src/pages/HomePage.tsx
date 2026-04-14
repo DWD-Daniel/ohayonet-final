@@ -60,7 +60,7 @@ const ProductCard = memo(({ product, onNavigate }: { product: Product; onNavigat
       {/* 3. The Redirect Button (Linked to Products Page) */}
       <div className="mt-3">
         <button
-          onClick={() => onNavigate('products', undefined, product.id)}
+          onClick={() => onNavigate('product', undefined, product.id)}
           className="w-full bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1"
         >
           <ShoppingCart className="w-3 h-3" />

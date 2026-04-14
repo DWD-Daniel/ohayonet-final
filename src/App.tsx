@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import NewProductsPage from './pages/NewProductsPage';
 import ContactPage from './pages/ContactPage';
 import CartPage from './pages/CartPage';
+import ProductDetailPage from './pages/ProductDetailPage';
 import { useState } from 'react';
 
 function App() {
@@ -31,7 +32,10 @@ function App() {
     }
 
     // Convert internal state names to URLs
-    const targetPath = page === 'home' ? '/' : `/${page}`;
+    let targetPath = page === 'home' ? '/' : `/${page}`;
+    if (page === 'product' && param) {
+      targetPath = `/product/${param}`;
+    }
     navigate(targetPath);
   };
 
@@ -62,12 +66,13 @@ function App() {
             initialSearchQuery={searchQuery}
             initialBuyId={buyProductId}
             onSearchQueryUsed={() => setSearchQuery('')}
+            onNavigate={handleNavigate}
           />
         } />
         
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/cart" element={<CartPage />} />
-        
+        <Route path="/product/:id" element={<ProductDetailPage />} />
         {/* Fallback for typing wrong URLs */}
         <Route path="*" element={<HomePage onNavigate={handleNavigate} />} />
       </Routes>

@@ -1,10 +1,1 @@
-# TODO: Update Drug Prices Task
-
-## Steps:
-- [ ] 1. Create TODO.md with this plan breakdown (done)
-- [x] 2. Perform all 24 price updates in src/data/categories.ts using edit_file
-- [x] 3. Verify changes with read_file on src/data/categories.ts
-- [x] 4. Updated discount slashed figures in HomePage.tsx ProductCard to proper Naira format with comma separation (using toLocaleString)
-- [x] 5. Fixed TS error in slashed price calculation
-- [x] 6. Task complete
-
+# Task: Match productDetails.ts with categories.ts as parent\n\n## Steps:\n\n1. ✅ Analyze files with search_files and read_file\n2. ✅ Create and confirm edit plan\n3. ✅ Create TODO.md for tracking\n4. ✅ Extract all unique product IDs from categories.ts (~50 IDs)\n5. ✅ Generate/add ProductDetail entries for all missing IDs in productDetails.ts\n6. ✅ Verify all existing entries match (no changes needed)\n7. ✅ Update productDetails.ts with full matching data\n8. [Pending] Test by viewing ProductDetailPage for previously-missing IDs (e.g., bt-004)\n9. ✅ Final TODO update and attempt_completion\n\n## Progress: Task complete! productDetails.ts now fully matches all categories.ts product IDs with detailed medical info. Ready for testing/demo.
