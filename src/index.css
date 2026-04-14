@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital%2Cwght@0%2C100..900%3B1%2C100..900&family=Roboto+Flex:ital%2Cwght@0%2C100..900%3B1%2C100..900&family=Poppins:ital%2Cwght@0%2C100..900%3B1%2C100..900&family=Manrope:ital%2Cwght@0%2C200..800%3B1%2C200..800&family=Playfair+Display:ital%2Cwght@0%2C400..900%3B1%2C400..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
