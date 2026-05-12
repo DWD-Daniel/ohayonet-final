@@ -11,42 +11,94 @@ interface EnhancedProduct extends Product {
   sku: string;
   expiration: string;
   description: string;
+  howToUse: string;
+  sideEffects: string;
+  precautions: string;
+  ingredients: string;
+  faqs: Array<{ question: string; answer: string }>;
   isInStock: boolean;
   gallery: string[];
   genericAlternatives: Product[];
 }
 
-// Dynamic tabs from product data
-
-const PDP_FAQS = [
-  { question: 'What is Daktacort used for?', answer: "Treats fungal skin infections with inflammation like athlete's foot, jock itch." },
-  { question: 'How long to use Daktacort?', answer: '7-14 days or as prescribed. Do not exceed 2 weeks without doctor advice.' },
-  { question: 'Can children use it?', answer: 'Not for children under 10 without pediatrician consultation.' },
-];
+const TAB_CONTENT: Record<string, string> = {
+  'how-to-use': 'howToUse',
+  'side-effects': 'sideEffects',
+  'precautions': 'precautions',
+  'ingredients': 'ingredients',
+};
 
 export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<EnhancedProduct | null>(null);
   const [activeTab, setActiveTab] = useState('how-to-use');
   const [selectedImage, setSelectedImage] = useState(0);
+  const [cartNotification, setCartNotification] = useState(false);
 
   useEffect(() => {
     if (id) {
       const allProds = getAllProducts();
-        const baseProduct = allProds.find(p => p.id === id);
+      const baseProduct = allProds.find(p => p.id === id);
       if (baseProduct) {
-        const detail = PRODUCT_DETAILS[id as keyof typeof PRODUCT_DETAILS] || PRODUCT_DETAILS['default'];
+        const detail = PRODUCT_DETAILS[id as keyof typeof PRODUCT_DETAILS];
         const enhanced: EnhancedProduct = {
           ...baseProduct,
-          ...detail,
-          sku: id!.toUpperCase(),
+          strength: detail?.strength || 'Standard',
+          form: detail?.form || 'Form',
+          sku: id.toUpperCase(),
+          expiration: detail?.expiration || '2026-12-01',
+          description: detail?.description || baseProduct.description || 'Premium pharmaceutical product',
+          howToUse: detail?.howToUse || 'Follow dosage instructions on package',
+          sideEffects: detail?.sideEffects || 'Consult pharmacist for side effects',
+          precautions: detail?.precautions || 'Please consult a healthcare professional',
+          ingredients: detail?.ingredients || 'See package for ingredients',
+          faqs: detail?.faqs || [],
           isInStock: true,
           gallery: [baseProduct.image, baseProduct.image, baseProduct.image],
+          genericAlternatives: detail?.genericAlternatives || [],
         };
         setProduct(enhanced);
+        // Scroll to top when product changes
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
   }, [id]);
+
+  const handleAddToCart = () => {
+    if (!product) return;
+    
+    try {
+      const storedCart = localStorage.getItem('cart');
+      const cart = storedCart ? JSON.parse(storedCart) : [];
+      
+      const existingItem = cart.find((item: any) => item.id === product.id);
+      
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({
+          id: product.id,
+          name: `${product.name} ${product.strength} ${product.form}`,
+          price: product.price,
+          image: product.gallery[0],
+          quantity: 1,
+        });
+      }
+      
+      localStorage.setItem('cart', JSON.stringify(cart));
+      setCartNotification(true);
+      
+      // Hide notification after 3 seconds
+      setTimeout(() => setCartNotification(false), 3000);
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+    }
+  };
+
+  const getTabulatedContent = (key: string): string => {
+    if (!product) return '';
+    return (product as any)[key] || 'Details coming soon.';
+  };
 
   const schemaData = product ? {
     '@context': 'https://schema.org/',
@@ -148,12 +200,26 @@ export default function ProductDetailPage() {
               </div>
             </div>
 
-            {/* Buy Button */}
-            <PaystackCheckout
-              productName={`${product.name} ${product.strength} ${product.form}`}
-              productPrice={product.price}
-              productId={product.id}
-            />
+            {/* Buy Button & Add to Cart */}
+            <div className="space-y-3">
+              <PaystackCheckout
+                productName={`${product.name} ${product.strength} ${product.form}`}
+                productPrice={product.price}
+                productId={product.id}
+              />
+              <button
+                onClick={handleAddToCart}
+                className="w-full bg-blue-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all flex items-center justify-center gap-2"
+              >
+                <ShoppingCart className="w-4 h-4" />
+                <span>Add to Cart</span>
+              </button>
+              {cartNotification && (
+                <div className="bg-green-50 border border-green-200 rounded-lg p-3 text-center text-green-700 text-sm font-medium animate-pulse">
+                  ✓ Added to cart successfully
+                </div>
+              )}
+            </div>
 
             {/* Local SEO */}
             <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
@@ -177,13 +243,13 @@ export default function ProductDetailPage() {
 
           {/* Beat the Competition Tabs */}
           <section>
-            <h2 className="text-2xl font-bold mb-6">Beat the Competition</h2>
+            <h2 className="text-2xl font-bold mb-6">Product Information</h2>
             <div className="border-b border-gray-200">
               {Object.keys(TAB_CONTENT).map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`py-4 px-1 border-b-2 font-semibold text-sm md:text-base mr-1 ${activeTab === tab
+                  className={`py-4 px-4 border-b-2 font-semibold text-sm md:text-base transition-colors ${activeTab === tab
                     ? 'border-red-600 text-red-600'
                     : 'border-transparent text-gray-600 hover:text-red-600'
                     }`}
@@ -192,8 +258,8 @@ export default function ProductDetailPage() {
                 </button>
               ))}
             </div>
-            <div className="py-8 text-gray-700 leading-relaxed">
-              (product as any)[activeTab.replace('-', 'ToUse' === 'how-to-use' ? 'howToUse' : activeTab === 'side-effects' ? 'sideEffects' : activeTab === 'precautions' ? 'precautions' : 'ingredients')] || 'Details coming soon.'
+            <div className="py-8 text-gray-700 leading-relaxed whitespace-pre-wrap">
+              {getTabulatedContent(TAB_CONTENT[activeTab])}
             </div>
           </section>
 
@@ -202,15 +268,40 @@ export default function ProductDetailPage() {
             <h2 className="text-2xl font-bold mb-6">Generic Alternatives (Save More)</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {product.genericAlternatives.map((alt) => (
-                <div key={alt.id} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all">
+                <div key={alt.id} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all border border-gray-200">
                   <div className="h-32 bg-gray-200 rounded-xl mb-4 bg-cover bg-center" style={{ backgroundImage: `url(${alt.image})` }} />
                   <h3 className="font-bold mb-2">{alt.name}</h3>
                   <div className="text-2xl font-bold text-red-600 mb-4">{alt.price}</div>
-                  <PaystackCheckout
-                    productName={alt.name}
-                    productPrice={alt.price}
-                    productId={alt.id}
-                  />
+                  <div className="space-y-2">
+                    <PaystackCheckout
+                      productName={alt.name}
+                      productPrice={alt.price}
+                      productId={alt.id}
+                    />
+                    <button
+                      onClick={() => {
+                        const storedCart = localStorage.getItem('cart');
+                        const cart = storedCart ? JSON.parse(storedCart) : [];
+                        const existingItem = cart.find((item: any) => item.id === alt.id);
+                        if (existingItem) {
+                          existingItem.quantity += 1;
+                        } else {
+                          cart.push({
+                            id: alt.id,
+                            name: alt.name,
+                            price: alt.price,
+                            image: alt.image,
+                            quantity: 1,
+                          });
+                        }
+                        localStorage.setItem('cart', JSON.stringify(cart));
+                      }}
+                      className="w-full bg-blue-600 text-white px-3 py-2 rounded-lg text-xs font-semibold hover:bg-blue-700 transition-all flex items-center justify-center gap-1"
+                    >
+                      <ShoppingCart className="w-3 h-3" />
+                      <span>Add to Cart</span>
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
@@ -219,23 +310,34 @@ export default function ProductDetailPage() {
           {/* Accordion FAQs for SEO */}
           <section>
             <h2 className="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
-            {PDP_FAQS.map((faq, idx) => (
-              <details key={idx} className="mb-4 border rounded-xl p-4 [&_summary]:font-semibold [&_summary]:cursor-pointer">
-                <summary className="list-none mb-2">{faq.question}</summary>
-                <p className="text-gray-700 ml-4">{faq.answer}</p>
-              </details>
-            ))}
+            {product.faqs && product.faqs.length > 0 ? (
+              product.faqs.map((faq, idx) => (
+                <details key={idx} className="mb-4 border rounded-xl p-4 [&_summary]:font-semibold [&_summary]:cursor-pointer hover:bg-gray-50">
+                  <summary className="list-none mb-2">{faq.question}</summary>
+                  <p className="text-gray-700 ml-4">{faq.answer}</p>
+                </details>
+              ))
+            ) : (
+              <p className="text-gray-600">No FAQs available for this product.</p>
+            )}
           </section>
         </div>
       </div>
 
       {/* Mobile Sticky Add to Cart */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 px-4 py-3 z-50 shadow-2xl">
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 px-4 py-3 z-50 shadow-2xl space-y-2">
         <PaystackCheckout
           productName={`${product.name} ${product.strength} ${product.form}`}
           productPrice={product.price}
           productId={product.id}
         />
+        <button
+          onClick={handleAddToCart}
+          className="w-full bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-all flex items-center justify-center gap-2"
+        >
+          <ShoppingCart className="w-4 h-4" />
+          <span>Add to Cart</span>
+        </button>
       </div>
     </div>
   );
